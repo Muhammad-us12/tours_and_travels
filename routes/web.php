@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Accounts\AccountsController;
+use App\Http\Controllers\Package\PackageController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +22,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+// Packages Routes
+
+Route::middleware('auth:web')->group(function(){
+    Route::get('/create_package',[PackageController::class,'create_package']);
+});
+
+Route::get('/dashboard',[AccountsController::class,'dashboard'])
+->middleware('auth:web')->name('dashboard');
+
+
+
+Route::get('/dashboard',[AccountsController::class,'dashboard'])
+->middleware('auth:web')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

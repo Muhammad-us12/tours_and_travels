@@ -25,9 +25,6 @@ Route::get('/', function () {
 
 // Packages Routes
 
-Route::middleware('auth:web')->group(function(){
-    Route::get('/create_package',[PackageController::class,'create_package']);
-});
 
 Route::get('/dashboard',[AccountsController::class,'dashboard'])
 ->middleware('auth:web')->name('dashboard');
@@ -41,6 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/destinations_list',[PackageController::class,'create_package']);
+
+    
 });
 
 require __DIR__.'/auth.php';

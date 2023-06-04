@@ -83,12 +83,12 @@
                         </li>
 
                         <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#packages" aria-expanded="false" aria-controls="packages" class="side-nav-link">
+                            <a data-bs-toggle="collapse" href="#destinations" aria-expanded="false" aria-controls="destinations" class="side-nav-link">
                                 <i class="uil-home-alt"></i>
                                 <span class="badge bg-success float-end">4</span>
                                 <span> Destinations </span>
                             </a>
-                            <div class="collapse" id="packages">
+                            <div class="collapse" id="destinations">
                                 <ul class="side-nav-second-level">
                                     <li>
                                         <a href="{{ URL::to('destinations_list') }}">Destinations</a>
@@ -106,6 +106,9 @@
                             </a>
                             <div class="collapse" id="packages">
                                 <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="{{ URL::to('packages_list') }}">Packages List</a>
+                                    </li>
                                     <li>
                                         <a href="{{ URL::to('create_package') }}">Create Packages</a>
                                     </li>

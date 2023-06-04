@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Accounts\AccountsController;
 use App\Http\Controllers\Package\PackageController;
+use App\Http\Controllers\DestinationsController;
 
 
 /*
@@ -39,8 +40,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/destinations_list',[PackageController::class,'create_package']);
+    // Destinations Routes
+    Route::get('/destinations_list',[DestinationsController::class,'destinations_list']);
+    Route::post('/destination_submit',[DestinationsController::class,'destination_submit']);
+    Route::get('/fetch_country_destinations/{id}',[DestinationsController::class,'fetch_country_destinations']);
 
+    // Packages Routes
+    Route::get('/create_package',[PackageController::class,'create_package']);
+    Route::post('/package_submit',[PackageController::class,'package_submit']);
+    Route::get('/packages_list',[PackageController::class,'packages_list']);
+
+    
+    
     
 });
 

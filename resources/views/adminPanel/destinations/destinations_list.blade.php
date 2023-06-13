@@ -132,7 +132,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title" id="standard-modalLabel">Add Category</h4>
+                                    <h4 class="modal-title" id="standard-modalLabel">Add Destination</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                 </div>
                                 <form action="{{ URL::to('destination_submit') }}" enctype="multipart/form-data" method="post">

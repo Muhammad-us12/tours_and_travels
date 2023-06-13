@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Accounts\AccountsController;
 use App\Http\Controllers\Package\PackageController;
 use App\Http\Controllers\DestinationsController;
+use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\website\BlogController;
+use App\Http\Controllers\WebsiteController;
+
+
 
 
 /*
@@ -19,9 +24,7 @@ use App\Http\Controllers\DestinationsController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WebsiteController::class,'index']);
 
 
 // Packages Routes
@@ -50,7 +53,22 @@ Route::middleware('auth')->group(function () {
     Route::post('/package_submit',[PackageController::class,'package_submit']);
     Route::get('/packages_list',[PackageController::class,'packages_list']);
 
-    
+     // Destinations Routes
+    Route::get('/reviews_list',[ReviewsController::class,'reviews_list']);
+    Route::post('/reviews_submit',[ReviewsController::class,'reviews_submit']);
+
+    // Website Blogs
+
+    Route::get('/blogs-list', [BlogsController::class,'index']);
+    Route::get('/blogs-add', [BlogsController::class,'create']);
+    Route::get('/blogs-update/{id}', [BlogsController::class,'edit']);
+    Route::post('/blogs-update/{id}', [BlogsController::class,'update']);
+    Route::post('/blogs-submit', [BlogsController::class,'store']);
+    Route::get('/blogs-categories', [BlogsController::class,'blogs_categories']);
+    Route::get('/category-data/{id}', [BlogsController::class,'getCategories']);
+    Route::post('/blog-cat-submit', [BlogsController::class,'storeCategory']);
+    Route::post('/blog-cat-update', [BlogsController::class,'updateCategory']);
+    Route::post('/update_blog_status', [BlogsController::class,'update_blog_status']);
     
     
 });

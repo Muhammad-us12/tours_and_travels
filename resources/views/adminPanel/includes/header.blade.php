@@ -140,6 +140,25 @@
                         </li>
 
                         <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#Activities" aria-expanded="false" aria-controls="Activities" class="side-nav-link">
+                                <i class="uil-home-alt"></i>
+                                <span class="badge bg-success float-end">4</span>
+                                <span> Activities </span>
+                            </a>
+                            <div class="collapse" id="Activities">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="{{ URL::to('activities_list') }}">Activities List</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ URL::to('create_activities') }}">Create Activities</a>
+                                    </li>
+                                  
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#reviews" aria-expanded="false" aria-controls="reviews" class="side-nav-link">
                                 <i class="uil-home-alt"></i>
                                 <span class="badge bg-success float-end">4</span>

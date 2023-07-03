@@ -33,6 +33,14 @@ class PackageController extends Controller
     public function package_submit(Request $request){
         // dd($request->all());
 
+        $validated = $request->validate([
+            'facilities' => 'max:4294967295',
+            'included' => 'max:4294967295',
+            'excluded' => 'max:4294967295',
+            'feacture_img'=>'required|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'baaner_img'=>'required|mimes:jpeg,png,jpg,gif,svg|max:1024',
+        ]);
+        
         // dd($request->file('itinerary_img')[0]);
         $package_obj = new Package;
         $package_obj->package_title = $request->package_title;

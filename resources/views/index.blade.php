@@ -105,7 +105,7 @@
                     </button>
                   </div>
 
-                  <div class="">
+                  <!-- <div class="">
                     <button class="tabs__button px-30 py-20 rounded-4 fw-600 text-white js-tabs-button " data-tab-target=".-tab-item-2">
                     <i class="icon-ski text-20 mr-10"></i>
                       Activity
@@ -117,7 +117,7 @@
                     <i class="icon-car text-20 mr-10"></i>
                       Transfers
                     </button>
-                  </div>
+                  </div> -->
 
                 
 
@@ -127,164 +127,47 @@
 
                 <div class="tabs__content js-tabs-content" style="transform: translate(0, -92%);">
 
+                
                   <div class="tabs__pane -tab-item-1 is-tab-el-active">
-                    <div class="mainSearch bg-white pr-20 py-20 lg:px-20 lg:pt-5 lg:pb-20 rounded-4 shadow-1">
-                      <div class="button-grid items-center">
+                    <form action="packages-list" method="post">
+                      @csrf
+                      <div class="mainSearch bg-white pr-20 py-20 lg:px-20 lg:pt-5 lg:pb-20 rounded-4 shadow-1">
+                        <div class="button-grid items-center">
 
-                        <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
+                          <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
 
-                          <div data-x-dd-click="searchMenu-loc">
-                            <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
-
-                            <div class="text-15 text-light-1 ls-2 lh-16">
-                              <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus" />
-                            </div>
-                          </div>
-
-
-                          <div class="searchMenu-loc__field shadow-2 js-popup-window" data-x-dd="searchMenu-loc" data-x-dd-toggle="-is-active">
-                            <div class="bg-white px-30 py-30 sm:px-0 sm:py-15 rounded-4">
-                              <div class="y-gap-5 js-results">
-
-                              @isset($all_destinations)
-                                @foreach($all_destinations as $index => $dest_res)
-                                <div>
-                                  <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
-                                    <div class="d-flex">
-                                      <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
-                                      <div class="ml-10">
-                                        <div class="text-15 lh-12 fw-500 js-search-option-target">{{ $dest_res->dest_name }}</div>
-                                        <div class="text-14 lh-12 text-light-1 mt-5"></div>
-                                      </div>
-                                    </div>
-                                  </button>
-                                </div>
+                          <label for="">Destination</label>
+                          <select name="destination" id="">
+                          @isset($all_destinations)
+                                  @foreach($all_destinations as $index => $dest_res)
+                                  <option value="{{ $dest_res->id }}">{{ $dest_res->dest_name }}</option>
                                 @endforeach
-                                @endisset
+                          @endisset      
+                          </select>
 
-                                <div>
-                                  <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
-                                    <div class="d-flex">
-                                      <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
-                                      <div class="ml-10">
-                                        <div class="text-15 lh-12 fw-500 js-search-option-target">New York</div>
-                                        <div class="text-14 lh-12 text-light-1 mt-5">New York State, United States</div>
-                                      </div>
-                                    </div>
-                                  </button>
-                                </div>
-
-                               
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-
-                        
-
-
-                        <div class="searchMenu-guests px-30 lg:py-20 lg:px-0 js-form-dd js-form-counters">
-
-                          <div data-x-dd-click="searchMenu-guests">
-                            <h4 class="text-15 fw-500 ls-2 lh-16">Guest</h4>
-
-                            <div class="text-15 text-light-1 ls-2 lh-16">
-                              <span class="js-count-adult">2</span> adults
-                              -
-                              <span class="js-count-child">1</span> childeren
-                              -
-                              <span class="js-count-room">1</span> room
-                            </div>
+                            
                           </div>
 
 
-                          <div class="searchMenu-guests__field shadow-2" data-x-dd="searchMenu-guests" data-x-dd-toggle="-is-active">
-                            <div class="bg-white px-30 py-30 rounded-4">
-                              <div class="row y-gap-10 justify-between items-center">
-                                <div class="col-auto">
-                                  <div class="text-15 fw-500">Adults</div>
-                                </div>
+                          
 
-                                <div class="col-auto">
-                                  <div class="d-flex items-center js-counter" data-value-change=".js-count-adult">
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-down">
-                                      <i class="icon-minus text-12"></i>
-                                    </button>
 
-                                    <div class="flex-center size-20 ml-15 mr-15">
-                                      <div class="text-15 js-count">2</div>
-                                    </div>
+                          <div class="searchMenu-guests px-30 lg:py-20 lg:px-0 js-form-dd js-form-counters">
 
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-up">
-                                      <i class="icon-plus text-12"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="border-top-light mt-24 mb-24"></div>
-
-                              <div class="row y-gap-10 justify-between items-center">
-                                <div class="col-auto">
-                                  <div class="text-15 lh-12 fw-500">Children</div>
-                                  <div class="text-14 lh-12 text-light-1 mt-5">Ages 0 - 17</div>
-                                </div>
-
-                                <div class="col-auto">
-                                  <div class="d-flex items-center js-counter" data-value-change=".js-count-child">
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-down">
-                                      <i class="icon-minus text-12"></i>
-                                    </button>
-
-                                    <div class="flex-center size-20 ml-15 mr-15">
-                                      <div class="text-15 js-count">1</div>
-                                    </div>
-
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-up">
-                                      <i class="icon-plus text-12"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="border-top-light mt-24 mb-24"></div>
-
-                              <div class="row y-gap-10 justify-between items-center">
-                                <div class="col-auto">
-                                  <div class="text-15 fw-500">Rooms</div>
-                                </div>
-
-                                <div class="col-auto">
-                                  <div class="d-flex items-center js-counter" data-value-change=".js-count-room">
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-down">
-                                      <i class="icon-minus text-12"></i>
-                                    </button>
-
-                                    <div class="flex-center size-20 ml-15 mr-15">
-                                      <div class="text-15 js-count">1</div>
-                                    </div>
-
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-up">
-                                      <i class="icon-plus text-12"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                          <label for="">Date</label>
+                          <input type="date" name="start_date" class="form-control">
                           </div>
-                        </div>
 
 
-                        <div class="button-item">
-                          <button class="mainSearch__submit button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
-                            <i class="icon-search text-20 mr-10"></i>
-                            Search
-                          </button>
+                          <div class="button-item">
+                            <button type="submit" class="mainSearch__submit button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
+                              <i class="icon-search text-20 mr-10"></i>
+                              Search
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </form>
                   </div>
 
                   <div class="tabs__pane -tab-item-2 ">
@@ -1506,69 +1389,9 @@
 
         <div class="row y-gap-30 pt-40 sm:pt-20">
 
-          <div data-anim-child="slide-up delay-1" class="col-xl-3 col-lg-3 col-sm-6">
-
-            <a href="activity-single.html" class="activityCard -type-1 rounded-4 ">
-              <div class="activityCard__image">
-
-                <div class="cardImage ratio ratio-1:1">
-                  <div class="cardImage__content">
-
-                    <img class="rounded-4 col-12" src="{{ asset('public/frontend/img/activities/1.png') }}" alt="image">
-
-
-                  </div>
-
-                  <div class="cardImage__wishlist">
-                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                      <i class="icon-heart text-12"></i>
-                    </button>
-                  </div>
-
-
-                  <div class="cardImage__leftBadge">
-                    <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-dark-1 text-white">
-                      LIKELY TO SELL OUT*
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div class="activityCard__content mt-10">
-                <div class="text-14 lh-14 text-light-1 mb-5">6+ hours</div>
-
-                <h4 class="activityCard__title lh-16 fw-500 text-dark-1 text-18">
-                  <span>Golden Circle, Kerid Volcanic Crater, and Blue Lagoon Day Trip</span>
-                </h4>
-
-                <p class="text-light-1 text-14 lh-14 mt-5">Westminster Borough, London</p>
-
-                <div class="row justify-between items-center pt-10">
-                  <div class="col-auto">
-                    <div class="d-flex items-center">
-                      <div class="icon-star text-yellow-1 text-10 mr-5"></div>
-
-                      <div class="text-14 text-light-1">
-                        <span class="text-15 text-dark-1 fw-500">4.82</span>
-                        94 reviews
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-auto">
-                    <div class="text-14 text-light-1">
-                      From <span class="text-16 fw-500 text-dark-1">US$72</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-          </div>
-
-          <div data-anim-child="slide-up delay-2" class="col-xl-3 col-lg-3 col-sm-6">
+        @isset($top_activities)
+            @foreach($top_activities as $activity_res)
+          <div data-anim-child="slide-up delay-{{ $loop->iteration }}" class="col-xl-3 col-lg-3 col-sm-6">
 
             <a href="activity-single.html" class="activityCard -type-1 rounded-4 ">
               <div class="activityCard__image">
@@ -1577,24 +1400,18 @@
                   <div class="cardImage__content">
 
 
-                    <div class="cardImage-slider rounded-4 overflow-hidden js-cardImage-slider">
+                    <div class="cardImage-slider rounded-4 overflow-hidden js-cardImage-slider" style="height:100%;">
                       <div class="swiper-wrapper">
 
                         <div class="swiper-slide">
-                          <img class="col-12" src="{{ asset('public/frontend/img/activities/2.png') }}" alt="image">
+                          <img class="col-12" src="{{ asset('public/images/Activities/'.$activity_res->feacture_img.'') }}" style="width:100%;height:100%;" alt="image">
                         </div>
 
                         <div class="swiper-slide">
-                          <img class="col-12" src="{{ asset('public/frontend/img/activities/3.png') }}" alt="image">
+                          <img class="col-12" src="{{ asset('public/images/Activities/'.$activity_res->baaner_img.'') }}" style="width:100%;height:100%;" alt="image">
                         </div>
 
-                        <div class="swiper-slide">
-                          <img class="col-12" src="{{ asset('public/frontend/img/activities/4.png') }}" alt="image">
-                        </div>
-
-                        <div class="swiper-slide">
-                          <img class="col-12" src="{{ asset('public/frontend/img/activities/1.png') }}" alt="image">
-                        </div>
+                        
 
                       </div>
 
@@ -1627,29 +1444,32 @@
               </div>
 
               <div class="activityCard__content mt-10">
-                <div class="text-14 lh-14 text-light-1 mb-5">6+ hours</div>
+                <div class="text-14 lh-14 text-light-1 mb-5">{{ $activity_res->activity_duration }}+ hours</div>
 
                 <h4 class="activityCard__title lh-16 fw-500 text-dark-1 text-18">
-                  <span>Edinburgh Sky to Sea Bike Tour by Manual or E-Bike</span>
+                  <span>{{ $activity_res->activity_title }}</span>
                 </h4>
 
-                <p class="text-light-1 text-14 lh-14 mt-5">Ciutat Vella, Barcelona</p>
+                <div style="display:flex;">
+                    <div class="icon-location-2 text-light-1 text-12 pt-4" style="margin: 5px;"></div>
+                    <p class="text-light-1 lh-14 text-14 mt-5">{{ $activity_res->activity_palce_address }}</p>
 
+                  </div>
+                  
                 <div class="row justify-between items-center pt-10">
                   <div class="col-auto">
                     <div class="d-flex items-center">
                       <div class="icon-star text-yellow-1 text-10 mr-5"></div>
 
                       <div class="text-14 text-light-1">
-                        <span class="text-15 text-dark-1 fw-500">4.82</span>
-                        94 reviews
+                        <span class="text-15 text-dark-1 fw-500">{{ $activity_res->stars_rating }}</span>
                       </div>
                     </div>
                   </div>
 
                   <div class="col-auto">
                     <div class="text-14 text-light-1">
-                      From <span class="text-16 fw-500 text-dark-1">US$72</span>
+                      From <span class="text-16 fw-500 text-dark-1">US${{ $activity_res->adult_sale_price }}</span>
                     </div>
                   </div>
                 </div>
@@ -1657,130 +1477,10 @@
             </a>
 
           </div>
+            @endforeach
+          @endisset
 
-          <div data-anim-child="slide-up delay-3" class="col-xl-3 col-lg-3 col-sm-6">
-
-            <a href="activity-single.html" class="activityCard -type-1 rounded-4 ">
-              <div class="activityCard__image">
-
-                <div class="cardImage ratio ratio-1:1">
-                  <div class="cardImage__content">
-
-                    <img class="rounded-4 col-12" src="{{ asset('public/frontend/img/activities/3.png') }}" alt="image">
-
-
-                  </div>
-
-                  <div class="cardImage__wishlist">
-                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                      <i class="icon-heart text-12"></i>
-                    </button>
-                  </div>
-
-
-                  <div class="cardImage__leftBadge">
-                    <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-blue-1 text-white">
-                      Best Seller
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div class="activityCard__content mt-10">
-                <div class="text-14 lh-14 text-light-1 mb-5">6+ hours</div>
-
-                <h4 class="activityCard__title lh-16 fw-500 text-dark-1 text-18">
-                  <span>Natural Crystal Blue Ice Cave Tour of Vatnajökull Glacier</span>
-                </h4>
-
-                <p class="text-light-1 text-14 lh-14 mt-5">Manhattan, New York</p>
-
-                <div class="row justify-between items-center pt-10">
-                  <div class="col-auto">
-                    <div class="d-flex items-center">
-                      <div class="icon-star text-yellow-1 text-10 mr-5"></div>
-
-                      <div class="text-14 text-light-1">
-                        <span class="text-15 text-dark-1 fw-500">4.82</span>
-                        94 reviews
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-auto">
-                    <div class="text-14 text-light-1">
-                      From <span class="text-16 fw-500 text-dark-1">US$72</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-          </div>
-
-          <div data-anim-child="slide-up delay-4" class="col-xl-3 col-lg-3 col-sm-6">
-
-            <a href="activity-single.html" class="activityCard -type-1 rounded-4 ">
-              <div class="activityCard__image">
-
-                <div class="cardImage ratio ratio-1:1">
-                  <div class="cardImage__content">
-
-                    <img class="rounded-4 col-12" src="{{ asset('public/frontend/img/activities/4.png') }}" alt="image">
-
-
-                  </div>
-
-                  <div class="cardImage__wishlist">
-                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                      <i class="icon-heart text-12"></i>
-                    </button>
-                  </div>
-
-
-                  <div class="cardImage__leftBadge">
-                    <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-yellow-1 text-dark-1">
-                      Top Rated
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div class="activityCard__content mt-10">
-                <div class="text-14 lh-14 text-light-1 mb-5">6+ hours</div>
-
-                <h4 class="activityCard__title lh-16 fw-500 text-dark-1 text-18">
-                  <span>South Coast Full Day Tour by Minibus from Reykjavik</span>
-                </h4>
-
-                <p class="text-light-1 text-14 lh-14 mt-5">Vaticano Prati, Rome</p>
-
-                <div class="row justify-between items-center pt-10">
-                  <div class="col-auto">
-                    <div class="d-flex items-center">
-                      <div class="icon-star text-yellow-1 text-10 mr-5"></div>
-
-                      <div class="text-14 text-light-1">
-                        <span class="text-15 text-dark-1 fw-500">4.82</span>
-                        94 reviews
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-auto">
-                    <div class="text-14 text-light-1">
-                      From <span class="text-16 fw-500 text-dark-1">US$72</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-          </div>
+          
 
         </div>
       </div>
@@ -2177,6 +1877,144 @@
       </div>
     </section>
 
+    <section class="layout-pt-lg layout-pb-lg bg-dark-3">
+      <div class="container">
+        <div class="row y-gap-60">
+          <div class="col-xl-5 col-lg-6">
+            <h2 class="text-30 text-white">What our customers are<br> saying us?</h2>
+            <p class="text-white mt-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo.</p>
+
+            <div class="row y-gap-30 text-white pt-60 lg:pt-40">
+              <div class="col-sm-5 col-6">
+                <div class="text-30 lh-15 fw-600">13m+</div>
+                <div class="lh-15">Happy People</div>
+              </div>
+
+              <div class="col-sm-5 col-6">
+                <div class="text-30 lh-15 fw-600">4.88</div>
+                <div class="lh-15">Overall rating</div>
+
+                <div class="d-flex x-gap-5 items-center pt-10">
+
+                  <div class="icon-star text-white text-10"></div>
+
+                  <div class="icon-star text-white text-10"></div>
+
+                  <div class="icon-star text-white text-10"></div>
+
+                  <div class="icon-star text-white text-10"></div>
+
+                  <div class="icon-star text-white text-10"></div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-4 offset-xl-2 col-lg-5 offset-lg-1 col-md-10">
+
+
+            <div class="testimonials-slider-2 js-testimonials-slider-2">
+              <div class="swiper-wrapper">
+
+              @isset($last_reviews)
+                @foreach($last_reviews as $review_res)
+                <div class="swiper-slide">
+                  <div class="testimonials -type-1 bg-white rounded-4 pt-40 pb-30 px-40 shadow-2">
+                    <div class="">
+                      <p class="testimonials__text lh-18 fw-500 text-dark-1" style="height:145px;">&quot;{{ Str::limit($review_res->review,200) }}.&quot;</p>
+
+                      <div class="pt-20 mt-28 border-top-light">
+                        <div class="row x-gap-20 y-gap-20 items-center">
+                          <div class="col-md-4">
+                            <img src="{{ asset('public/images/Reviews/'.$review_res->picture.'') }}" style="width: 75px;border-radius: 50%;height: 75px;" alt="image">
+                          </div>
+
+                          <div class="col-md-8">
+                            <div class="text-15 fw-500 lh-14">{{ $review_res->name }}</div>
+                            <div class="text-14 lh-14 text-light-1 mt-5">
+                                <div class="d-flex items-center mt-20">
+                                  <div class="flex-center bg-blue-1 rounded-4 size-30 text-12 fw-600 text-white">{{ $review_res->ratings }}</div>
+                                  <div class="icon-star text-yellow-1 text-10 mr-5"></div>
+                                  <h6>Rating</h6>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                @endforeach
+              @endisset
+
+              </div>
+
+
+              <div class="d-flex x-gap-15 items-center justify-center pt-30">
+                <div class="col-auto">
+                  <button class="d-flex items-center text-24 arrow-left-hover text-white js-prev">
+                    <i class="icon icon-arrow-left"></i>
+                  </button>
+                </div>
+
+                <div class="col-auto">
+                  <div class="pagination -dots text-white-50 js-pagination"></div>
+                </div>
+
+                <div class="col-auto">
+                  <button class="d-flex items-center text-24 arrow-right-hover text-white js-next">
+                    <i class="icon icon-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      
+      </div>
+    </section>
+
+    <section class="layout-pt-lg layout-pb-md">
+      <div data-anim-wrap class="container">
+        <div data-anim-child="slide-up delay-1" class="row">
+          <div class="col-auto">
+            <div class="sectionTitle -md">
+              <h2 class="sectionTitle__title">Our Top Articles</h2>
+              <p class=" sectionTitle__text mt-5 sm:mt-0">Interdum et malesuada fames</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row y-gap-30 pt-40">
+
+        @isset($last_blogs)
+          @foreach($last_blogs as $blog_res)
+          <div data-anim-child="slide-up delay-{{ $loop->iteration }}" class="col-lg-3 col-sm-6">
+
+            <a href="" class="blogCard -type-1 d-block ">
+              <div class="blogCard__image">
+                <div class="ratio ratio-1:1 rounded-4 rounded-8">
+                  <img class="img-ratio js-lazy" src="#" data-src="{{ asset('public/images/blogs/'.$blog_res->picture.'') }}" alt="image">
+                </div>
+              </div>
+
+              <div class="mt-20">
+                <h4 class="text-dark-1 text-18 fw-500">{{ Str::limit($blog_res->title,50) }}</h4>
+                <div class="text-light-1 text-15 lh-14 mt-5">{{ date('F d Y',strtotime($blog_res->created_at)) }}</div>
+              </div>
+            </a>
+
+          </div>
+          @endforeach
+        @endisset
+
+          
+        </div>
+      </div>
+    </section>
     
 
     

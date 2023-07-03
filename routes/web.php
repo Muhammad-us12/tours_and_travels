@@ -5,10 +5,13 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Accounts\AccountsController;
 use App\Http\Controllers\Package\PackageController;
+use App\Http\Controllers\Activities\ActivityController;
+
 use App\Http\Controllers\DestinationsController;
 use App\Http\Controllers\ReviewsController;
-use App\Http\Controllers\website\BlogController;
+use App\Http\Controllers\website\BlogsController;
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\BookingController;
 
 
 
@@ -25,6 +28,14 @@ use App\Http\Controllers\WebsiteController;
 */
 
 Route::get('/', [WebsiteController::class,'index']);
+Route::any('/packages-list', [WebsiteController::class,'packages_list']);
+Route::get('/package_details/{package_details}', [WebsiteController::class,'package_details']);
+Route::post('/add_to_cart', [BookingController::class,'add_to_cart']);
+Route::get('/checkout', [BookingController::class,'checkout']);
+Route::post('/confirm_booking', [BookingController::class,'confirm_booking']);
+Route::get('/invoice/{id}', [BookingController::class,'invoice']);
+Route::get('/contact_us', [WebsiteController::class,'contact_us']);
+Route::get('/about_us', [WebsiteController::class,'about_us']);
 
 
 // Packages Routes
@@ -52,6 +63,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/create_package',[PackageController::class,'create_package']);
     Route::post('/package_submit',[PackageController::class,'package_submit']);
     Route::get('/packages_list',[PackageController::class,'packages_list']);
+
+    // Activities Routes
+    Route::get('/create_activities',[ActivityController::class,'create_activities']);
+    Route::post('/activities_submit',[ActivityController::class,'activities_submit']);
+    Route::get('/activities_list',[ActivityController::class,'activities_list']);
+    
 
      // Destinations Routes
     Route::get('/reviews_list',[ReviewsController::class,'reviews_list']);

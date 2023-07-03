@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Stylesheets -->
+  @yield('style')
   <link rel="stylesheet" href="{{ asset('public/frontend/css/vendors.css') }}">
   <link rel="stylesheet" href="{{ asset('public/frontend/css/main.css') }}">
 
@@ -36,7 +37,7 @@
       </div>
     </div>
 
-    <div class="preloader__title">GoTrip</div>
+    <div class="preloader__title">Beyond Border Tourism</div>
   </div>
 
   <main>
@@ -48,7 +49,7 @@
 
           <div class="col-auto">
             <div class="d-flex items-center">
-              <a href="index.html" class="header-logo mr-30" data-x="header-logo" data-x-toggle="is-logo-dark">
+              <a href="{{ URL::to('/') }}" class="header-logo mr-30" data-x="header-logo" data-x-toggle="is-logo-dark">
                 <img src="{{ asset('public/frontend/img/general/logo-dark.svg') }}" alt="logo icon">
                 <img src="{{ asset('public/frontend/img/general/logo-dark.svg') }}" alt="logo icon">
               </a>
@@ -63,37 +64,37 @@
                     <ul class="menu__nav text-dark-1 -is-active">
 
                      <li>
-                        <a href="destinations.html">
+                        <a href="{{ URL::to('/') }}">
                           Home
                         </a>
                       </li>
 
                       <li>
-                        <a href="destinations.html">
+                        <a href="#">
                         LOI Pakistan/ Visa Support
                         </a>
                       </li>
 
                       <li>
-                        <a href="destinations.html">
+                        <a href="{{ URL::to('packages-list') }}">
                             Packages
                         </a>
                       </li>
 
                       <li>
-                        <a href="destinations.html">
+                        <a href="#">
                             Blogs
                         </a>
                       </li>
 
                       <li>
-                        <a href="destinations.html">
+                        <a href="{{ URL::to('contact_us') }}">
                             Contact Us
                         </a>
                       </li>
 
                       <li>
-                        <a href="destinations.html">
+                        <a href="{{ URL::to('about_us') }}">
                             About Us
                         </a>
                       </li>

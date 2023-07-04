@@ -31,6 +31,7 @@
             </div>
           </div>
 
+
           <div class="col-auto">
             <a href="#" class="text-14 text-light-1">London Tourism: Best of London</a>
           </div>

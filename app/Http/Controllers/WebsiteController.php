@@ -45,6 +45,7 @@ class WebsiteController extends Controller
 
     public function packages_list(Request $request){
 
+        dd($request->all());
         if ($request->method() === 'GET') {
             $all_packages = Package::orderBy('created_at','desc')
             ->select('id','package_title','feacture_img','baaner_img','start_date','end_date','group_size','destination',

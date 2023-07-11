@@ -1,4 +1,7 @@
 
+<?php 
+  use App\Helpers\Helper;
+?>
 @extends('website/includes/master')
 
 @section('content')
@@ -105,7 +108,7 @@
                     </button>
                   </div>
 
-                  <!-- <div class="">
+                  <div class="">
                     <button class="tabs__button px-30 py-20 rounded-4 fw-600 text-white js-tabs-button " data-tab-target=".-tab-item-2">
                     <i class="icon-ski text-20 mr-10"></i>
                       Activity
@@ -117,7 +120,7 @@
                     <i class="icon-car text-20 mr-10"></i>
                       Transfers
                     </button>
-                  </div> -->
+                  </div>
 
                 
 
@@ -127,44 +130,65 @@
 
                 <div class="tabs__content js-tabs-content" style="transform: translate(0, -92%);">
 
-                
                   <div class="tabs__pane -tab-item-1 is-tab-el-active">
-                    <form action="packages-list" method="post">
+                    <form action="{{ URL::to('packages-list') }}" method="post">
                       @csrf
                       <div class="mainSearch bg-white pr-20 py-20 lg:px-20 lg:pt-5 lg:pb-20 rounded-4 shadow-1">
                         <div class="button-grid items-center">
+                            <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
 
-                          <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
+                              <div data-x-dd-click="searchMenu-loc">
+                                <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
 
-                          <label for="">Destination</label>
-                          <select name="destination" id="">
-                          @isset($all_destinations)
-                                  @foreach($all_destinations as $index => $dest_res)
-                                  <option value="{{ $dest_res->id }}">{{ $dest_res->dest_name }}</option>
-                                @endforeach
-                          @endisset      
-                          </select>
-
-                            
-                          </div>
+                                <div class="text-15 text-light-1 ls-2 lh-16">
+                                  <input autocomplete="off" type="search" name="destination" placeholder="Where are you going?" class="js-search js-dd-focus" />
+                                  <input type="text" id="dest_id">
+                                </div>
+                              </div>
 
 
-                          
+                              <div class="searchMenu-loc__field shadow-2 js-popup-window" data-x-dd="searchMenu-loc" data-x-dd-toggle="-is-active">
+                                <div class="bg-white px-30 py-30 sm:px-0 sm:py-15 rounded-4">
+                                  <div class="y-gap-5 js-results">
+                                  <?php 
+                                    $destinations = [];
+                                  ?>
+                                  @isset($all_destinations)
+                                    @foreach($all_destinations as $index => $dest_res)
+                                    <?php 
+                                      $country = Helper::getCountryName($dest_res->country);
+                                      $destinations []= ['city'=>$dest_res->dest_name,'country'=>$country];
+                                    ?>
+                                    <div>
+                                      <button type="button" class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
+                                        <div class="d-flex">
+                                          <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
+                                          <div class="ml-10">
+                                            <div class="text-15 lh-12 fw-500 js-search-option-target">{{ $dest_res->dest_name }}</div>
+                                            <div class="text-14 lh-12 text-light-1 mt-5"></div>
+                                            <input type="text" class="destination_id" value="{{ $dest_res->id }}">
+                                          </div>
+                                        </div>
+                                      </button>
+                                    </div>
+                                    @endforeach
+                                    @endisset
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
 
+                            <div class="px-30 lg:py-20 lg:px-0">
+                                <label for="">Start Date</label>
+                                <input type="date" name="start_date" value="{{ date('Y-m-d') }}" class="form-control">
+                            </div>
 
-                          <div class="searchMenu-guests px-30 lg:py-20 lg:px-0 js-form-dd js-form-counters">
-
-                          <label for="">Date</label>
-                          <input type="date" name="start_date" class="form-control">
-                          </div>
-
-
-                          <div class="button-item">
-                            <button type="submit" class="mainSearch__submit button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
-                              <i class="icon-search text-20 mr-10"></i>
-                              Search
-                            </button>
-                          </div>
+                            <div class="button-item">
+                              <button class="mainSearch__submit button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
+                                <i class="icon-search text-20 mr-10"></i>
+                                Search
+                              </button>
+                            </div>
                         </div>
                       </div>
                     </form>
@@ -2019,4 +2043,73 @@
 
     
 
+  @endsection
+
+  @section('scripts')
+    <script>
+      function liveSearch() {
+        const targets = document.querySelectorAll('.js-liverSearch')
+        if (!targets) return
+
+        const destinations = '<?php echo json_encode($destinations); ?>';
+        const data = JSON.parse(destinations); 
+        console.log(data);
+        targets.forEach(el => {
+          const search = el.querySelector('.js-search')
+          const results = el.querySelector('.js-results')
+          let searchTerm = ''
+
+          results.querySelectorAll('.js-search-option').forEach(option => {
+            const title = option.querySelector('.js-search-option-target').innerHTML
+            const dest_id = option.querySelector('.destination_id').value
+
+            // dest_id
+            option.addEventListener('click', () => {
+              search.value = title
+              $('#destination_id') = title
+              el.querySelector('.js-popup-window').classList.remove('-is-active')
+            })
+          })
+
+          search.addEventListener('input', (event) => {
+            searchTerm = event.target.value.toLowerCase()
+            showList(searchTerm, results)
+
+            results.querySelectorAll('.js-search-option').forEach(option => {
+              const title = option.querySelector('.js-search-option-target').innerHTML
+
+              option.addEventListener('click', () => {
+                search.value = title
+                el.querySelector('.js-popup-window').classList.remove('-is-active')
+              })
+            })
+          })
+        })
+
+        const showList = (searchTerm, resultsEl) => {
+          resultsEl.innerHTML = '';
+
+          data
+            .filter((item) => item.city.toLowerCase().includes(searchTerm))
+            .forEach((e) => {
+              const div = document.createElement('div')
+
+              div.innerHTML = `
+                <button type="button" class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
+                  <div class="d-flex">
+                    <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
+                    <div class="ml-10">
+                      <div class="text-15 lh-12 fw-500 js-search-option-target">${e.city}</div>
+                      <div class="text-14 lh-12 text-light-1 mt-5">${e.country}</div>
+                      <input type="text" class="destination_id" value="${e.id}">
+                    </div>
+                  </div>
+                </button>
+              `
+
+              resultsEl.appendChild(div)
+            })
+        }
+      }
+    </script>
   @endsection

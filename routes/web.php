@@ -30,6 +30,11 @@ use App\Http\Controllers\BookingController;
 Route::get('/', [WebsiteController::class,'index']);
 Route::any('/packages-list', [WebsiteController::class,'packages_list']);
 Route::get('/package_details/{package_details}', [WebsiteController::class,'package_details']);
+
+Route::any('/activities-list', [WebsiteController::class,'activities_list']);
+Route::get('/activity_details/{activity_details}', [WebsiteController::class,'activity_details']);
+
+
 Route::post('/add_to_cart', [BookingController::class,'add_to_cart']);
 Route::get('/checkout', [BookingController::class,'checkout']);
 Route::post('/confirm_booking', [BookingController::class,'confirm_booking']);

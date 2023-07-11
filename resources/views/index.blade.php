@@ -4,6 +4,8 @@
 ?>
 @extends('website/includes/master')
 
+
+
 @section('content')
     <section data-anim-wrap class="masthead -type-4">
       <div data-anim-child="slide-up" class="masthead-slider overflow-x-hidden js-masthead-slider-4">
@@ -137,45 +139,15 @@
                         <div class="button-grid items-center">
                             <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
 
-                              <div data-x-dd-click="searchMenu-loc">
-                                <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
+                                <label for="">Destination</label>
+                                <select name="destination" id="">
+                                @isset($all_destinations)
+                                        @foreach($all_destinations as $index => $dest_res)
+                                        <option value="{{ $dest_res->id }}">{{ $dest_res->dest_name }}</option>
+                                      @endforeach
+                                @endisset      
+                                </select>
 
-                                <div class="text-15 text-light-1 ls-2 lh-16">
-                                  <input autocomplete="off" type="search" name="destination" placeholder="Where are you going?" class="js-search js-dd-focus" />
-                                  <input type="text" id="dest_id">
-                                </div>
-                              </div>
-
-
-                              <div class="searchMenu-loc__field shadow-2 js-popup-window" data-x-dd="searchMenu-loc" data-x-dd-toggle="-is-active">
-                                <div class="bg-white px-30 py-30 sm:px-0 sm:py-15 rounded-4">
-                                  <div class="y-gap-5 js-results">
-                                  <?php 
-                                    $destinations = [];
-                                  ?>
-                                  @isset($all_destinations)
-                                    @foreach($all_destinations as $index => $dest_res)
-                                    <?php 
-                                      $country = Helper::getCountryName($dest_res->country);
-                                      $destinations []= ['city'=>$dest_res->dest_name,'country'=>$country];
-                                    ?>
-                                    <div>
-                                      <button type="button" class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
-                                        <div class="d-flex">
-                                          <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
-                                          <div class="ml-10">
-                                            <div class="text-15 lh-12 fw-500 js-search-option-target">{{ $dest_res->dest_name }}</div>
-                                            <div class="text-14 lh-12 text-light-1 mt-5"></div>
-                                            <input type="text" class="destination_id" value="{{ $dest_res->id }}">
-                                          </div>
-                                        </div>
-                                      </button>
-                                    </div>
-                                    @endforeach
-                                    @endisset
-                                  </div>
-                                </div>
-                              </div>
                             </div>
 
                             <div class="px-30 lg:py-20 lg:px-0">
@@ -866,7 +838,7 @@
             @foreach($top_packages as $packag_res)
             <div class="swiper-slide">
 
-              <a href="hotel-single-1.html" class="hotelsCard -type-1 ">
+              <a href="{{ URL::to('package_details/'.$packag_res->id.'') }}" class="hotelsCard -type-1 ">
                 <div class="hotelsCard__image">
 
                   <div class="cardImage ratio ratio-1:1">
@@ -948,424 +920,6 @@
             @endforeach
           @endisset
 
-            <div class="swiper-slide">
-
-              <a href="hotel-single-1.html" class="hotelsCard -type-1 ">
-                <div class="hotelsCard__image">
-
-                  <div class="cardImage ratio ratio-1:1">
-                    <div class="cardImage__content">
-
-
-                      <div class="cardImage-slider rounded-4 overflow-hidden js-cardImage-slider">
-                        <div class="swiper-wrapper">
-
-                          <div class="swiper-slide">
-                            <img class="col-12" src="{{ asset('public/frontend/img/hotels/2.png') }}" alt="image">
-                          </div>
-
-                          <div class="swiper-slide">
-                            <img class="col-12" src="img/hotels/1.png" alt="image">
-                          </div>
-
-                          <div class="swiper-slide">
-                            <img class="col-12" src="img/hotels/3.png" alt="image">
-                          </div>
-
-                        </div>
-
-                        <div class="cardImage-slider__pagination js-pagination"></div>
-
-                        <div class="cardImage-slider__nav -prev">
-                          <button class="button -blue-1 bg-white size-30 rounded-full shadow-2 js-prev">
-                            <i class="icon-chevron-left text-10"></i>
-                          </button>
-                        </div>
-
-                        <div class="cardImage-slider__nav -next">
-                          <button class="button -blue-1 bg-white size-30 rounded-full shadow-2 js-next">
-                            <i class="icon-chevron-right text-10"></i>
-                          </button>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    <div class="cardImage__wishlist">
-                      <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                        <i class="icon-heart text-12"></i>
-                      </button>
-                    </div>
-
-
-                  </div>
-
-                </div>
-
-                <div class="hotelsCard__content mt-10">
-                  <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                    <span>Staycity Aparthotels Deptford Bridge Station</span>
-                  </h4>
-
-                  <p class="text-light-1 lh-14 text-14 mt-5">Ciutat Vella, Barcelona</p>
-
-                  <div class="d-flex items-center mt-20">
-                    <div class="flex-center bg-blue-1 rounded-4 size-30 text-12 fw-600 text-white">4.8</div>
-                    <div class="text-14 text-dark-1 fw-500 ml-10">Exceptional</div>
-                    <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
-                  </div>
-
-                  <div class="mt-5">
-                    <div class="fw-500">
-                      Starting from <span class="text-blue-1">US$72</span>
-                    </div>
-                  </div>
-                </div>
-              </a>
-
-            </div>
-
-            <div class="swiper-slide">
-
-              <a href="hotel-single-1.html" class="hotelsCard -type-1 ">
-                <div class="hotelsCard__image">
-
-                  <div class="cardImage ratio ratio-1:1">
-                    <div class="cardImage__content">
-
-                      <img class="rounded-4 col-12" src="img/hotels/3.png" alt="image">
-
-
-                    </div>
-
-                    <div class="cardImage__wishlist">
-                      <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                        <i class="icon-heart text-12"></i>
-                      </button>
-                    </div>
-
-
-                    <div class="cardImage__leftBadge">
-                      <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-blue-1 text-white">
-                        Best Seller
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="hotelsCard__content mt-10">
-                  <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                    <span>The Westin New York at Times Square</span>
-                  </h4>
-
-                  <p class="text-light-1 lh-14 text-14 mt-5">Manhattan, New York</p>
-
-                  <div class="d-flex items-center mt-20">
-                    <div class="flex-center bg-blue-1 rounded-4 size-30 text-12 fw-600 text-white">4.8</div>
-                    <div class="text-14 text-dark-1 fw-500 ml-10">Exceptional</div>
-                    <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
-                  </div>
-
-                  <div class="mt-5">
-                    <div class="fw-500">
-                      Starting from <span class="text-blue-1">US$72</span>
-                    </div>
-                  </div>
-                </div>
-              </a>
-
-            </div>
-
-            <div class="swiper-slide">
-
-              <a href="hotel-single-1.html" class="hotelsCard -type-1 ">
-                <div class="hotelsCard__image">
-
-                  <div class="cardImage ratio ratio-1:1">
-                    <div class="cardImage__content">
-
-                      <img class="rounded-4 col-12" src="img/hotels/4.png" alt="image">
-
-
-                    </div>
-
-                    <div class="cardImage__wishlist">
-                      <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                        <i class="icon-heart text-12"></i>
-                      </button>
-                    </div>
-
-
-                    <div class="cardImage__leftBadge">
-                      <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-yellow-1 text-dark-1">
-                        Top Rated
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="hotelsCard__content mt-10">
-                  <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                    <span>DoubleTree by Hilton Hotel New York Times Square West</span>
-                  </h4>
-
-                  <p class="text-light-1 lh-14 text-14 mt-5">Vaticano Prati, Rome</p>
-
-                  <div class="d-flex items-center mt-20">
-                    <div class="flex-center bg-blue-1 rounded-4 size-30 text-12 fw-600 text-white">4.8</div>
-                    <div class="text-14 text-dark-1 fw-500 ml-10">Exceptional</div>
-                    <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
-                  </div>
-
-                  <div class="mt-5">
-                    <div class="fw-500">
-                      Starting from <span class="text-blue-1">US$72</span>
-                    </div>
-                  </div>
-                </div>
-              </a>
-
-            </div>
-
-            <div class="swiper-slide">
-
-              <a href="hotel-single-1.html" class="hotelsCard -type-1 ">
-                <div class="hotelsCard__image">
-
-                  <div class="cardImage ratio ratio-1:1">
-                    <div class="cardImage__content">
-
-                      <img class="rounded-4 col-12" src="img/hotels/1.png" alt="image">
-
-
-                    </div>
-
-                    <div class="cardImage__wishlist">
-                      <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                        <i class="icon-heart text-12"></i>
-                      </button>
-                    </div>
-
-
-                    <div class="cardImage__leftBadge">
-                      <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-dark-1 text-white">
-                        Breakfast included
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="hotelsCard__content mt-10">
-                  <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                    <span>The Montcalm At Brewery London City</span>
-                  </h4>
-
-                  <p class="text-light-1 lh-14 text-14 mt-5">Westminster Borough, London</p>
-
-                  <div class="d-flex items-center mt-20">
-                    <div class="flex-center bg-blue-1 rounded-4 size-30 text-12 fw-600 text-white">4.8</div>
-                    <div class="text-14 text-dark-1 fw-500 ml-10">Exceptional</div>
-                    <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
-                  </div>
-
-                  <div class="mt-5">
-                    <div class="fw-500">
-                      Starting from <span class="text-blue-1">US$72</span>
-                    </div>
-                  </div>
-                </div>
-              </a>
-
-            </div>
-
-            <div class="swiper-slide">
-
-              <a href="hotel-single-1.html" class="hotelsCard -type-1 ">
-                <div class="hotelsCard__image">
-
-                  <div class="cardImage ratio ratio-1:1">
-                    <div class="cardImage__content">
-
-
-                      <div class="cardImage-slider rounded-4 overflow-hidden js-cardImage-slider">
-                        <div class="swiper-wrapper">
-
-                          <div class="swiper-slide">
-                            <img class="col-12" src="img/hotels/2.png" alt="image">
-                          </div>
-
-                          <div class="swiper-slide">
-                            <img class="col-12" src="img/hotels/1.png" alt="image">
-                          </div>
-
-                          <div class="swiper-slide">
-                            <img class="col-12" src="img/hotels/3.png" alt="image">
-                          </div>
-
-                        </div>
-
-                        <div class="cardImage-slider__pagination js-pagination"></div>
-
-                        <div class="cardImage-slider__nav -prev">
-                          <button class="button -blue-1 bg-white size-30 rounded-full shadow-2 js-prev">
-                            <i class="icon-chevron-left text-10"></i>
-                          </button>
-                        </div>
-
-                        <div class="cardImage-slider__nav -next">
-                          <button class="button -blue-1 bg-white size-30 rounded-full shadow-2 js-next">
-                            <i class="icon-chevron-right text-10"></i>
-                          </button>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    <div class="cardImage__wishlist">
-                      <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                        <i class="icon-heart text-12"></i>
-                      </button>
-                    </div>
-
-
-                  </div>
-
-                </div>
-
-                <div class="hotelsCard__content mt-10">
-                  <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                    <span>Staycity Aparthotels Deptford Bridge Station</span>
-                  </h4>
-
-                  <p class="text-light-1 lh-14 text-14 mt-5">Ciutat Vella, Barcelona</p>
-
-                  <div class="d-flex items-center mt-20">
-                    <div class="flex-center bg-blue-1 rounded-4 size-30 text-12 fw-600 text-white">4.8</div>
-                    <div class="text-14 text-dark-1 fw-500 ml-10">Exceptional</div>
-                    <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
-                  </div>
-
-                  <div class="mt-5">
-                    <div class="fw-500">
-                      Starting from <span class="text-blue-1">US$72</span>
-                    </div>
-                  </div>
-                </div>
-              </a>
-
-            </div>
-
-            <div class="swiper-slide">
-
-              <a href="hotel-single-1.html" class="hotelsCard -type-1 ">
-                <div class="hotelsCard__image">
-
-                  <div class="cardImage ratio ratio-1:1">
-                    <div class="cardImage__content">
-
-                      <img class="rounded-4 col-12" src="img/hotels/3.png" alt="image">
-
-
-                    </div>
-
-                    <div class="cardImage__wishlist">
-                      <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                        <i class="icon-heart text-12"></i>
-                      </button>
-                    </div>
-
-
-                    <div class="cardImage__leftBadge">
-                      <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-blue-1 text-white">
-                        Best Seller
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="hotelsCard__content mt-10">
-                  <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                    <span>The Westin New York at Times Square</span>
-                  </h4>
-
-                  <p class="text-light-1 lh-14 text-14 mt-5">Manhattan, New York</p>
-
-                  <div class="d-flex items-center mt-20">
-                    <div class="flex-center bg-blue-1 rounded-4 size-30 text-12 fw-600 text-white">4.8</div>
-                    <div class="text-14 text-dark-1 fw-500 ml-10">Exceptional</div>
-                    <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
-                  </div>
-
-                  <div class="mt-5">
-                    <div class="fw-500">
-                      Starting from <span class="text-blue-1">US$72</span>
-                    </div>
-                  </div>
-                </div>
-              </a>
-
-            </div>
-
-            <div class="swiper-slide">
-
-              <a href="hotel-single-1.html" class="hotelsCard -type-1 ">
-                <div class="hotelsCard__image">
-
-                  <div class="cardImage ratio ratio-1:1">
-                    <div class="cardImage__content">
-
-                      <img class="rounded-4 col-12" src="img/hotels/4.png" alt="image">
-
-
-                    </div>
-
-                    <div class="cardImage__wishlist">
-                      <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                        <i class="icon-heart text-12"></i>
-                      </button>
-                    </div>
-
-
-                    <div class="cardImage__leftBadge">
-                      <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-yellow-1 text-dark-1">
-                        Top Rated
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="hotelsCard__content mt-10">
-                  <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                    <span>DoubleTree by Hilton Hotel New York Times Square West</span>
-                  </h4>
-
-                  <p class="text-light-1 lh-14 text-14 mt-5">Vaticano Prati, Rome</p>
-
-                  <div class="d-flex items-center mt-20">
-                    <div class="flex-center bg-blue-1 rounded-4 size-30 text-12 fw-600 text-white">4.8</div>
-                    <div class="text-14 text-dark-1 fw-500 ml-10">Exceptional</div>
-                    <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
-                  </div>
-
-                  <div class="mt-5">
-                    <div class="fw-500">
-                      Starting from <span class="text-blue-1">US$72</span>
-                    </div>
-                  </div>
-                </div>
-              </a>
-
-            </div>
 
           </div>
 
@@ -2046,12 +1600,16 @@
   @endsection
 
   @section('scripts')
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script> -->
+
     <script>
       function liveSearch() {
         const targets = document.querySelectorAll('.js-liverSearch')
         if (!targets) return
 
-        const destinations = '<?php echo json_encode($destinations); ?>';
+        const destinations = '<?php echo json_encode($all_destinations); ?>';
         const data = JSON.parse(destinations); 
         console.log(data);
         targets.forEach(el => {
@@ -2113,3 +1671,4 @@
       }
     </script>
   @endsection
+

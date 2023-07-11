@@ -45,7 +45,7 @@ class WebsiteController extends Controller
 
     public function packages_list(Request $request){
 
-        dd($request->all());
+        // dd($request->all());
         if ($request->method() === 'GET') {
             $all_packages = Package::orderBy('created_at','desc')
             ->select('id','package_title','feacture_img','baaner_img','start_date','end_date','group_size','destination',
@@ -65,12 +65,45 @@ class WebsiteController extends Controller
         return view('website/packages_list',compact('all_packages')); 
     }
 
+    public function activities_list(Request $request){
+
+        // dd($request->all());
+        if ($request->method() === 'GET') {
+            $all_activities = Activities::orderBy('created_at','desc')
+            ->select('id','activity_title','feacture_img','baaner_img','start_date','end_date','group_size','activity_palce_address',
+                    'adult_sale_price','stars_rating','country','activity_duration')
+            ->paginate(10);
+
+        } elseif ($request->method() === 'POST') {
+            $all_packages = Activities::where('destination',$request->destination)
+                            ->whereDate('start_date', '>', $request->start_date)
+                            ->orderBy('created_at','desc')
+                            ->select('id','activity_title','feacture_img','baaner_img','start_date','end_date','group_size','activity_palce_address',
+                                    'adult_sale_price','stars_rating','country','activity_duration','destination')
+                            ->paginate(10);
+        }
+       
+
+        return view('website/activities_list',compact('all_activities')); 
+    }
+
+    
+
     public function package_details(Package $package_details){
         $last_reviews = Reviews::orderBy('id','desc')
                             ->limit(100)
                             ->get();
         return view('website/package_details',compact('package_details','last_reviews')); 
     }
+
+    public function activity_details(Activities $activity_details){
+        $last_reviews = Reviews::orderBy('id','desc')
+                            ->limit(100)
+                            ->get();
+        return view('website/activity_details',compact('activity_details','last_reviews')); 
+    }
+
+    
 
     public function contact_us(){
         return view('website/contact_us');

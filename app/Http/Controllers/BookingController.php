@@ -42,6 +42,8 @@ class BookingController extends Controller
                 return redirect()->back()->with(['error'=> 'Something Went Wrong Try Again']);
             }
         }
+
+        dd($request->all());
     }
     
     public function checkout(){

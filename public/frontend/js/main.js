@@ -39,7 +39,7 @@ function initComponents() {
   Select.init(".js-select")
   parallaxInit()
   Events.init()
-  Events.ddInit()
+  // Events.ddInit()
   Header.init()
   Header.headerSticky()
 

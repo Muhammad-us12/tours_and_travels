@@ -7,6 +7,7 @@
 
 
 @section('content')
+
     <section data-anim-wrap class="masthead -type-4">
       <div data-anim-child="slide-up" class="masthead-slider overflow-x-hidden js-masthead-slider-4">
         <div class="swiper-wrapper">
@@ -99,6 +100,7 @@
         <div class="text-14 text-white">Scroll Now</div>
         <div class="-line"></div>
       </div>
+      
 
       <div class="tabs -bookmark js-tabs" style="width: 80%;position: absolute;top: 75%;left: 50%;transform: translate(-50%, -50%);">
                 <div class="tabs__controls d-flex items-center js-tabs-controls">
@@ -167,193 +169,37 @@
                   </div>
 
                   <div class="tabs__pane -tab-item-2 ">
-                    <div class="mainSearch bg-white pr-20 py-20 lg:px-20 lg:pt-5 lg:pb-20 rounded-4 shadow-1">
-                      <div class="button-grid items-center">
+                  <form action="{{ URL::to('activities-list') }}" method="post">
+                      @csrf
+                      <div class="mainSearch bg-white pr-20 py-20 lg:px-20 lg:pt-5 lg:pb-20 rounded-4 shadow-1">
+                        <div class="button-grid items-center">
+                            <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
 
-                        <div class="searchMenu-loc px-30 lg:py-20 lg:px-0 js-form-dd js-liverSearch">
+                                <label for="">Destination</label>
+                                <select name="destination" id="">
+                                @isset($all_destinations)
+                                        @foreach($all_destinations as $index => $dest_res)
+                                        <option value="{{ $dest_res->id }}">{{ $dest_res->dest_name }}</option>
+                                      @endforeach
+                                @endisset      
+                                </select>
 
-                          <div data-x-dd-click="searchMenu-loc">
-                            <h4 class="text-15 fw-500 ls-2 lh-16">Location</h4>
-
-                            <div class="text-15 text-light-1 ls-2 lh-16">
-                              <input autocomplete="off" type="search" placeholder="Where are you going?" class="js-search js-dd-focus" />
                             </div>
-                          </div>
 
-
-                          <div class="searchMenu-loc__field shadow-2 js-popup-window" data-x-dd="searchMenu-loc" data-x-dd-toggle="-is-active">
-                            <div class="bg-white px-30 py-30 sm:px-0 sm:py-15 rounded-4">
-                              <div class="y-gap-5 js-results">
-
-                                <div>
-                                  <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
-                                    <div class="d-flex">
-                                      <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
-                                      <div class="ml-10">
-                                        <div class="text-15 lh-12 fw-500 js-search-option-target">London</div>
-                                        <div class="text-14 lh-12 text-light-1 mt-5">Greater London, United Kingdom</div>
-                                      </div>
-                                    </div>
-                                  </button>
-                                </div>
-
-                                <div>
-                                  <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
-                                    <div class="d-flex">
-                                      <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
-                                      <div class="ml-10">
-                                        <div class="text-15 lh-12 fw-500 js-search-option-target">New York</div>
-                                        <div class="text-14 lh-12 text-light-1 mt-5">New York State, United States</div>
-                                      </div>
-                                    </div>
-                                  </button>
-                                </div>
-
-                                <div>
-                                  <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
-                                    <div class="d-flex">
-                                      <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
-                                      <div class="ml-10">
-                                        <div class="text-15 lh-12 fw-500 js-search-option-target">Paris</div>
-                                        <div class="text-14 lh-12 text-light-1 mt-5">France</div>
-                                      </div>
-                                    </div>
-                                  </button>
-                                </div>
-
-                                <div>
-                                  <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
-                                    <div class="d-flex">
-                                      <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
-                                      <div class="ml-10">
-                                        <div class="text-15 lh-12 fw-500 js-search-option-target">Madrid</div>
-                                        <div class="text-14 lh-12 text-light-1 mt-5">Spain</div>
-                                      </div>
-                                    </div>
-                                  </button>
-                                </div>
-
-                                <div>
-                                  <button class="-link d-block col-12 text-left rounded-4 px-20 py-15 js-search-option">
-                                    <div class="d-flex">
-                                      <div class="icon-location-2 text-light-1 text-20 pt-4"></div>
-                                      <div class="ml-10">
-                                        <div class="text-15 lh-12 fw-500 js-search-option-target">Santorini</div>
-                                        <div class="text-14 lh-12 text-light-1 mt-5">Greece</div>
-                                      </div>
-                                    </div>
-                                  </button>
-                                </div>
-
-                              </div>
+                            <div class="px-30 lg:py-20 lg:px-0">
+                                <label for="">Start Date</label>
+                                <input type="date" name="start_date" value="{{ date('Y-m-d') }}" class="form-control">
                             </div>
-                          </div>
-                        </div>
 
-
-                      
-
-
-                        <div class="searchMenu-guests px-30 lg:py-20 lg:px-0 js-form-dd js-form-counters">
-
-                          <div data-x-dd-click="searchMenu-guests">
-                            <h4 class="text-15 fw-500 ls-2 lh-16">Guest</h4>
-
-                            <div class="text-15 text-light-1 ls-2 lh-16">
-                              <span class="js-count-adult">2</span> adults
-                              -
-                              <span class="js-count-child">1</span> childeren
-                              -
-                              <span class="js-count-room">1</span> room
+                            <div class="button-item">
+                              <button class="mainSearch__submit button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
+                                <i class="icon-search text-20 mr-10"></i>
+                                Search
+                              </button>
                             </div>
-                          </div>
-
-
-                          <div class="searchMenu-guests__field shadow-2" data-x-dd="searchMenu-guests" data-x-dd-toggle="-is-active">
-                            <div class="bg-white px-30 py-30 rounded-4">
-                              <div class="row y-gap-10 justify-between items-center">
-                                <div class="col-auto">
-                                  <div class="text-15 fw-500">Adults</div>
-                                </div>
-
-                                <div class="col-auto">
-                                  <div class="d-flex items-center js-counter" data-value-change=".js-count-adult">
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-down">
-                                      <i class="icon-minus text-12"></i>
-                                    </button>
-
-                                    <div class="flex-center size-20 ml-15 mr-15">
-                                      <div class="text-15 js-count">2</div>
-                                    </div>
-
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-up">
-                                      <i class="icon-plus text-12"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="border-top-light mt-24 mb-24"></div>
-
-                              <div class="row y-gap-10 justify-between items-center">
-                                <div class="col-auto">
-                                  <div class="text-15 lh-12 fw-500">Children</div>
-                                  <div class="text-14 lh-12 text-light-1 mt-5">Ages 0 - 17</div>
-                                </div>
-
-                                <div class="col-auto">
-                                  <div class="d-flex items-center js-counter" data-value-change=".js-count-child">
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-down">
-                                      <i class="icon-minus text-12"></i>
-                                    </button>
-
-                                    <div class="flex-center size-20 ml-15 mr-15">
-                                      <div class="text-15 js-count">1</div>
-                                    </div>
-
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-up">
-                                      <i class="icon-plus text-12"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="border-top-light mt-24 mb-24"></div>
-
-                              <div class="row y-gap-10 justify-between items-center">
-                                <div class="col-auto">
-                                  <div class="text-15 fw-500">Rooms</div>
-                                </div>
-
-                                <div class="col-auto">
-                                  <div class="d-flex items-center js-counter" data-value-change=".js-count-room">
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-down">
-                                      <i class="icon-minus text-12"></i>
-                                    </button>
-
-                                    <div class="flex-center size-20 ml-15 mr-15">
-                                      <div class="text-15 js-count">1</div>
-                                    </div>
-
-                                    <button class="button -outline-blue-1 text-blue-1 size-38 rounded-4 js-up">
-                                      <i class="icon-plus text-12"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-
-                        <div class="button-item">
-                          <button class="mainSearch__submit button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
-                            <i class="icon-search text-20 mr-10"></i>
-                            Search
-                          </button>
                         </div>
                       </div>
-                    </div>
+                    </form>
                   </div>
 
                   <div class="tabs__pane -tab-item-3 ">
@@ -971,7 +817,7 @@
             @foreach($top_activities as $activity_res)
           <div data-anim-child="slide-up delay-{{ $loop->iteration }}" class="col-xl-3 col-lg-3 col-sm-6">
 
-            <a href="activity-single.html" class="activityCard -type-1 rounded-4 ">
+            <a href="{{ URL::to('activity_details/'.$activity_res->id.'') }}" class="activityCard -type-1 rounded-4 ">
               <div class="activityCard__image">
 
                 <div class="cardImage ratio ratio-1:1">

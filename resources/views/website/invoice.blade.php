@@ -51,6 +51,7 @@
                 <i class="icon-bed text-20 ml-10"></i>
               </button>
             </div>
+            <img src="data:image/png;base64,{{ base64_encode($qrCode) }}" alt="QR Code">
 
             <div class="bg-white rounded-4 mt-50">
               <div class="layout-pt-lg layout-pb-lg px-50">

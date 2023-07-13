@@ -42,6 +42,14 @@ Route::get('/invoice/{id}', [BookingController::class,'invoice']);
 Route::get('/contact_us', [WebsiteController::class,'contact_us']);
 Route::get('/about_us', [WebsiteController::class,'about_us']);
 
+// Customer Login
+Route::get('/customer_login', [WebsiteController::class,'customer_login']);
+Route::post('/email_submit', [WebsiteController::class,'email_submit']);
+Route::get('/otp_verify', [WebsiteController::class,'otp_verify']);
+Route::post('/otp_submit', [WebsiteController::class,'otp_submit']);
+Route::get('/customer_dashboard', [WebsiteController::class,'customer_dashboard']);
+
+
 
 // Packages Routes
 

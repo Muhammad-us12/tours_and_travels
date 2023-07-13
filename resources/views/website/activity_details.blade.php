@@ -3,6 +3,10 @@
 ?>
 @extends('website/includes/master')
 
+@section('style')
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+@endsection
+
 @section('content')
 <section class="py-10 d-flex items-center bg-light-2">
       <div class="container">
@@ -100,7 +104,7 @@
                   <div class="col-auto">
                     <div class="d-flex x-gap-5 items-center">
                       <i class="icon-placeholder text-16 text-light-1"></i>
-                      <div class="text-15 text-light-1">{{ $activity_details->activityDestination->dest_name }},{{ Helper::getCountryName($activity_details->country) }} </div>
+                      <div class="text-15 text-light-1">{{ $activity_details->activity_palce_address }} </div>
                     </div>
                   </div>
 
@@ -280,8 +284,9 @@
                         <div class="col-12">
 
                         <div class="form-input ">
-                            <input type="date" name="activity_select_date" required>
-                            <label class="lh-1 text-16 text-light-1">Select Date</label>
+                        <input type="text" id="datepicker" name="activity_select_date" required>
+                            <!-- <input type="date" id="datepicker" > -->
+                            <label class="lh-1 text-16 text-light-1" style="top: 15px;">Select Date</label>
                         </div>
 
                         </div>
@@ -424,4 +429,44 @@
     <div class="container mt-40 mb-40">
       <div class="border-top-light"></div>
     </div>
+@endsection
+
+@section('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    var minDateStr = "{{ $activity_details->start_date }}";
+    var minDateParts = minDateStr.split("-");
+    var minDate = new Date(
+      parseInt(minDateParts[0]),  // Year
+      parseInt(minDateParts[1]) - 1,  // Month (zero-based)
+      parseInt(minDateParts[2])  // Day
+    );
+
+    var maxDateStr = "{{ $activity_details->end_date }}";
+    var maxDateParts = maxDateStr.split("-");
+    var maxDate = new Date(
+      parseInt(maxDateParts[0]),  // Year
+      parseInt(maxDateParts[1]) - 1,  // Month (zero-based)
+      parseInt(maxDateParts[2])  // Day
+    );
+
+    var allowedDays = <?php echo $activity_details->availibilty_days ?>
+
+    $( "#datepicker" ).datepicker({
+        minDate: minDate,  // Minimum allowed date (January 1, 2023)
+        maxDate: maxDate, // Maximum allowed date (December 31, 2023)
+        beforeShowDay: function(date) {
+          var day = date.getDay();
+          var dayName = $.datepicker.formatDate('DD', date); // Get the day name
+
+          // Check if the day name is in the allowedDays array
+          var isAllowed = allowedDays.includes(dayName);
+
+          return [isAllowed, ""];
+        }
+      });
+  } );
+  </script>
 @endsection

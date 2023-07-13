@@ -249,7 +249,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>{{ $package_details->Payment_instructions }}</p>
+        <p>
+          @isset($package_details)
+            {{ $package_details->Payment_instructions }}
+          @endisset
+
+          @isset($activity_data)
+            {{ $activity_data->Payment_instructions }}
+          @endisset
+        </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -317,13 +325,21 @@
 
                 <div class="row x-gap-15 y-gap-20">
                   <div class="col-auto">
-                    <img src="{{ asset('public/images/Packages/'.$package_details->feacture_img.'') }}" alt="image" class="size-140 rounded-4 object-cover">
+                    
+                    @isset($package_details)
+                      <img src="{{ asset('public/images/Packages/'.$package_details->feacture_img.'') }}" alt="image" class="size-140 rounded-4 object-cover">
+                    @endisset
+
+                    @isset($activity_data)
+                      <img src="{{ asset('public/images/Activities/'.$activity_data->feacture_img.'') }}" alt="image" class="size-140 rounded-4 object-cover">
+                    @endisset
                   </div>
 
                   <div class="col">
+                    @isset($package_details)
                     <div class="d-flex x-gap-5 pb-10">
 
-                    @if($package_details->stars_rating == 5)
+                       @if($package_details->stars_rating == 5)
                             <i class="icon-star text-10 text-yellow-1"></i>
 
                             <i class="icon-star text-10 text-yellow-1"></i>
@@ -368,12 +384,78 @@
                         @endif
 
                     </div>
+                    @endisset
 
-                    <div class="lh-17 fw-500">{{ $package_details->package_title }}</div>
+                    @isset($activity_data)
+                    <div class="d-flex x-gap-5 pb-10">
+
+                       @if($activity_data->stars_rating == 5)
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                            <i class="icon-star text-10 text-yellow-1"></i>
+                        @endif
+
+                        @if($activity_data->stars_rating == 4)
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                        @endif
+
+                        @if($activity_data->stars_rating == 3)
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                        @endif
+
+
+                        @if($activity_data->stars_rating == 2)
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                            <i class="icon-star text-10 text-yellow-1"></i>
+
+                        @endif
+
+                        @if($activity_data->stars_rating == 1)
+                            <i class="icon-star text-10 text-yellow-1"></i>
+                        @endif
+
+                    </div>
+                    @endisset
+
+                    <div class="lh-17 fw-500">
+                    @isset($package_details)
+                       {{ $package_details->package_title }}
+                    @endisset
+
+                    @isset($activity_data)
+                       {{ $activity_data->activity_title }}
+                    @endisset
+                    </div>
                     <div class="text-14 lh-15 mt-5">
                         <div class="d-flex x-gap-5 items-center">
                         <i class="icon-placeholder text-16 text-light-1"></i>
-                        <div class="text-15 text-light-1">{{ $package_details->packageDestination->dest_name }},{{ Helper::getCountryName($package_details->country) }} </div>
+                        <div class="text-15 text-light-1">
+                        @isset($package_details)
+                          {{ $package_details->packageDestination->dest_name }},{{ Helper::getCountryName($package_details->country) }} </div>
+                        @endisset
+
+                        @isset($activity_data)
+                          {{ $activity_data->activity_palce_address }}
+                        @endisset
                         </div>
                     </div>
 
@@ -381,7 +463,16 @@
                       <div class="col-auto">
                         <div class="d-flex items-center">
                           <div class="size-30 flex-center bg-blue-1 rounded-4">
-                            <div class="text-12 fw-600 text-white">{{ $package_details->stars_rating }}</div>
+                            <div class="text-12 fw-600 text-white">
+                            @isset($package_details)
+                              {{ $package_details->stars_rating }}
+                            @endisset
+
+                            @isset($activity_data)
+                              {{ $activity_data->stars_rating }}
+                            @endisset
+                              
+                            </div>
                           </div>
 
                           <div class="text-14 fw-500 ml-10">Exceptional</div>
@@ -396,6 +487,8 @@
                 <div class="border-top-light mt-30 mb-20"></div>
 
                 <div class="row y-gap-20 justify-between">
+                  @isset($package_details)
+                     
                   <div class="col-auto">
                     <div class="text-15">Start Date</div>
                     <div class="fw-500">{{ date('d-m-Y',strtotime($cart_data['start_date'])) }}</div>
@@ -409,13 +502,31 @@
                     <div class="text-15">End Date</div>
                     <div class="fw-500">{{ date('d-m-Y',strtotime($cart_data['end_date'])) }}</div>
                   </div>
+                    
+                  @endisset
+                  @isset($activity_data)
+                    <div class="col-auto text-right md:text-left">
+                      <div class="text-15">Your Select Date Date</div>
+                      <div class="fw-500">{{ date('d-m-Y',strtotime($cart_data['customer_select_date'])) }}</div>
+                    </div>
+                  @endisset
                 </div>
 
                 <div class="border-top-light mt-30 mb-20"></div>
 
                 <div class="">
                   <div class="text-15">Total length of stay:</div>
-                  <div class="fw-500">{{ $package_details->duration }}</div>
+                  <div class="fw-500">
+                  @isset($package_details)
+                     {{ $package_details->duration }}
+                  @endisset
+
+                  @isset($activity_data)
+                    {{ $activity_data->activity_duration }} Hours
+                  @endisset
+
+                    
+                  </div>
                 </div>
 
                 <div class="border-top-light mt-30 mb-20"></div>

@@ -7,6 +7,11 @@ use App\Models\Packages\Package;
 use App\Models\Activities\Activities;
 use App\Models\Reviews;
 use App\Models\website\Blogs;
+use App\Models\BookingCustomers;
+use Str;
+use Hash;
+use Session;
+
 
 
 use Illuminate\Http\Request;
@@ -65,6 +70,54 @@ class WebsiteController extends Controller
         return view('website/packages_list',compact('all_packages')); 
     }
 
+    public function customer_login(){
+        return view('website/login'); 
+    }
+
+    public function email_submit(Request $request){
+        $customer_data = BookingCustomers::where('email',$request->email)->first();
+        if($customer_data){
+            $otp = Str::random(6);
+            $hashedOTP = Hash::make($otp);
+            BookingCustomers::where('id',$customer_data->id)->update([
+                'password' => $hashedOTP
+            ]);
+
+            Session::put('customer_email',$request->email);
+
+            return redirect('otp_verify')->with(["success"=>"OPT has Send to your email $otp"]);
+            // dd($customer_data);
+        }else{
+            return redirect()->back()->with(['error'=>'Your Email not Found']);
+        }
+    }
+
+    public function otp_submit(Request $request){
+        $customer_email = Session::get('customer_email');
+        $customer_data = BookingCustomers::where('email',$customer_email)->first();
+        if($customer_data){
+            if (Hash::check($request->otp, $customer_data->password)) {
+                Session::put('customer_data',$customer_data);
+                return redirect('customer_dashboard')->with(["success"=>"Login Successfully"]);
+
+            }else{
+                return redirect()->back()->with(['error'=>'Wrong OTP']);
+            }
+        }else{
+            return redirect()->back()->with(['error'=>'Your Email not Found']);
+        }
+    }
+
+    public function customer_dashboard(){
+        return view('website/customer_dashboard/customer_dashboard'); 
+    }
+
+    
+
+    public function otp_verify(){
+        return view('website/otp_verify'); 
+    }
+
     public function activities_list(Request $request){
 
         // dd($request->all());
@@ -75,11 +128,11 @@ class WebsiteController extends Controller
             ->paginate(10);
 
         } elseif ($request->method() === 'POST') {
-            $all_packages = Activities::where('destination',$request->destination)
-                            ->whereDate('start_date', '>', $request->start_date)
+            $all_activities = Activities::where('destination',$request->destination)
+                            ->whereDate('end_date', '>', $request->start_date)
                             ->orderBy('created_at','desc')
                             ->select('id','activity_title','feacture_img','baaner_img','start_date','end_date','group_size','activity_palce_address',
-                                    'adult_sale_price','stars_rating','country','activity_duration','destination')
+                                    'adult_sale_price','stars_rating','country','activity_duration')
                             ->paginate(10);
         }
        

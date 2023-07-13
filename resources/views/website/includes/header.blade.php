@@ -126,12 +126,12 @@
 
 
               <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
-                <a href="login.html" class="button px-30 fw-400 text-14 -outline-blue-1 h-40 text-blue-1 ml-20">Login</a>
-                <a href="signup.html" class="button -white bg-blue-1 px-30 fw-400 text-14 h-40 text-white ml-20">Register</a>
+                <a href="{{ URL::to('customer_login') }}" class="button px-30 fw-400 text-14 -outline-blue-1 h-40 text-blue-1 ml-20">Login</a>
+                <!-- <a href="signup.html" class="button -white bg-blue-1 px-30 fw-400 text-14 h-40 text-white ml-20">Register</a> -->
               </div>
 
               <div class="d-none xl:d-flex x-gap-20 items-center pl-30" data-x="header-mobile-icons" data-x-toggle="text-white">
-                <div><a href="login.html" class="d-flex items-center icon-user text-inherit text-22"></a></div>
+                <div><a href="" class="d-flex items-center icon-user text-inherit text-22"></a></div>
                 <div><button class="d-flex items-center icon-menu text-inherit text-20" data-x-click="html, header, header-logo, header-mobile-icons, mobile-menu"></button></div>
               </div>
             </div>

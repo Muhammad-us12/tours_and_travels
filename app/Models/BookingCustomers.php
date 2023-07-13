@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class BookingCustomers extends Model
 {
     use HasFactory;
-    protected $fillable = ['balance'];
+    protected $fillable = ['balance','password'];
 }

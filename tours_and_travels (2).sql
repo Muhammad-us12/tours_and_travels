@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2023 at 10:08 AM
+-- Generation Time: Jul 14, 2023 at 09:33 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -140,7 +140,7 @@ CREATE TABLE `booking_customers` (
 --
 
 INSERT INTO `booking_customers` (`id`, `customer_name`, `balance`, `email`, `password`, `phone`, `address`, `country`, `zip`, `gender`, `created_at`, `updated_at`) VALUES
-(4, 'Muhammad Usama', 6210.00, 'usama.asghar7868@gmail.com', '$2y$10$5WPHvCvmbNlLkv5WZUCMeunGN0vTzT3nvqp4uydJdGq0Pq61M6y1i', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', '2023-07-02 23:46:28', '2023-07-13 03:01:31'),
+(4, 'Muhammad Usama', 6210.00, 'usama.asghar7868@gmail.com', '$2y$10$P/EnBdV.3vYBlS2ZYoL6g.rDgyTCGAsYOcK8tFgSysgv2qgf8YsRa', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', '2023-07-02 23:46:28', '2023-07-14 00:43:01'),
 (5, 'Muhammad Usama', 105.00, 'uasghar992@gmail.com', '', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', '2023-07-12 17:46:04', '2023-07-12 17:46:04');
 
 -- --------------------------------------------------------
@@ -511,7 +511,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2023_06_30_104250_create_activities_table', 6),
 (16, '2023_07_02_115334_create_booking_customers_table', 7),
 (17, '2023_07_02_150417_create_customer_ledgers_table', 7),
-(19, '2023_07_02_150900_create_packages_bookings_table', 8);
+(19, '2023_07_02_150900_create_packages_bookings_table', 8),
+(20, '2023_07_14_070702_create_payment_requests_table', 9);
 
 -- --------------------------------------------------------
 
@@ -606,6 +607,34 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_requests`
+--
+
+CREATE TABLE `payment_requests` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `payment_amount` varchar(255) NOT NULL,
+  `transcation_id` varchar(255) NOT NULL,
+  `payment_method` varchar(255) NOT NULL,
+  `invoice_no` varchar(255) NOT NULL,
+  `payment_date` varchar(255) NOT NULL,
+  `payment_pic` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `customer_id` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `payment_requests`
+--
+
+INSERT INTO `payment_requests` (`id`, `payment_amount`, `transcation_id`, `payment_method`, `invoice_no`, `payment_date`, `payment_pic`, `status`, `customer_id`, `created_at`, `updated_at`) VALUES
+(1, '500', 'Tras23324', 'Bank Transfer', '324234234', '2023-07-14', '1771379863889882.png', 'Pending', '4', '2023-07-14 02:24:41', '2023-07-14 02:24:41'),
+(2, '1000', 'Tr324234', 'Bank Trasnfer', '2342342', '2023-07-14', '1771379997765839.png', 'Pending', '4', '2023-07-14 02:26:48', '2023-07-14 02:26:48');
 
 -- --------------------------------------------------------
 
@@ -756,6 +785,12 @@ ALTER TABLE `password_resets`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `payment_requests`
+--
+ALTER TABLE `payment_requests`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
@@ -832,7 +867,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `packages`
@@ -845,6 +880,12 @@ ALTER TABLE `packages`
 --
 ALTER TABLE `packages_bookings`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `payment_requests`
+--
+ALTER TABLE `payment_requests`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`

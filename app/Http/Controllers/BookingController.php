@@ -9,6 +9,7 @@ use App\Models\Activities\Activities;
 use App\Models\BookingCustomers;
 use App\Models\CustomerLedger;
 use App\Models\PackagesBooking;
+use App\Models\payment_request;
 use Session;
 use DB;
 use Str;
@@ -106,11 +107,11 @@ class BookingController extends Controller
             $customer_Data->customer_name = $request->lead_name;
             $customer_Data->balance = 0;
             $customer_Data->email = $request->lead_email;
-            $customer_Data->phone = $request->lead_name;
-            $customer_Data->address = $request->lead_name;
-            $customer_Data->country = $request->lead_name;
-            $customer_Data->zip = $request->lead_name;
-            $customer_Data->gender = $request->lead_name;
+            $customer_Data->phone = $request->lead_phone;
+            $customer_Data->address = $request->lead_address;
+            $customer_Data->country = $request->lead_country;
+            $customer_Data->zip = $request->lead_zip;
+            $customer_Data->gender = $request->lead_gender;
             $new_customer = true;
         }
 
@@ -226,5 +227,45 @@ class BookingController extends Controller
             return redirect('/')->with(['error'=>'Invoice No Not Found']);;
         }
         
+    }
+
+    public function payment_request_submit(Request $request){
+        if(Session::has('customer_data')){
+            $customer_Data = Session::get('customer_data');
+
+            $payment_object =  new payment_request;
+            $payment_object->payment_amount = $request->payment_amount;
+            $payment_object->transcation_id = $request->transcation_id;
+            $payment_object->payment_method = $request->payment_method;
+            $payment_object->invoice_no = $request->invoice_no;
+            $payment_object->payment_date = $request->payment_date;
+            $payment_object->status = 'Pending';
+            $payment_object->customer_id = $customer_Data->id;
+
+            if($request->file('payment_pic')){
+                    
+                $img_file = $request->file('payment_pic');
+                $name_gen = hexdec(uniqid());
+                $img_ext = strtolower($img_file->getClientOriginalExtension());
+                $img_name = $name_gen.".".$img_ext;
+                $upload = 'public/images/payment_requests';
+                $file_upload = $img_file->move($upload,$img_name);
+                if($file_upload){
+                    $payment_object->payment_pic = $img_name;
+                    $result = $payment_object->save();
+                    if($result){
+                        return redirect()->back()->with(['success'=>'Upload Successfully']);
+                    }else{
+                        return redirect()->back()->with(['error'=>'Something Went Wrong Try Again']);
+                    }
+                }else{
+                    return redirect()->back()->with(['error'=>'Something Went Wrong Try Again']);
+                }
+            }else{
+                return redirect()->back()->with(['error'=>'Something Went Wrong Try Again']);
+            }
+
+        }
+        // 
     }
 }

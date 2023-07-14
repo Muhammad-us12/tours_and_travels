@@ -126,7 +126,18 @@
 
 
               <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
-                <a href="{{ URL::to('customer_login') }}" class="button px-30 fw-400 text-14 -outline-blue-1 h-40 text-blue-1 ml-20">Login</a>
+                <?php 
+                   if(Session::has('customer_data')){
+                    ?>
+                        <a href="{{ URL::to('customer_dashboard') }}" class="button px-30 fw-400 text-14 -outline-blue-1 h-40 text-blue-1 ml-20">Dashboard</a>
+                    <?php
+                    }else{
+                        ?>
+                        <a href="{{ URL::to('customer_login') }}" class="button px-30 fw-400 text-14 -outline-blue-1 h-40 text-blue-1 ml-20">Login</a>
+                        <?php
+                    }
+                ?>
+                
                 <!-- <a href="signup.html" class="button -white bg-blue-1 px-30 fw-400 text-14 h-40 text-white ml-20">Register</a> -->
               </div>
 

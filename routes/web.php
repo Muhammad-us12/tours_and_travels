@@ -48,6 +48,9 @@ Route::post('/email_submit', [WebsiteController::class,'email_submit']);
 Route::get('/otp_verify', [WebsiteController::class,'otp_verify']);
 Route::post('/otp_submit', [WebsiteController::class,'otp_submit']);
 Route::get('/customer_dashboard', [WebsiteController::class,'customer_dashboard']);
+Route::get('/customer_booking', [WebsiteController::class,'customer_booking']);
+Route::get('/customer_payment_request', [WebsiteController::class,'customer_payment_request']);
+Route::post('/payment_request_submit', [BookingController::class,'payment_request_submit']);
 
 
 

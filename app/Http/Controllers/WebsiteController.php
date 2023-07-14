@@ -8,6 +8,8 @@ use App\Models\Activities\Activities;
 use App\Models\Reviews;
 use App\Models\website\Blogs;
 use App\Models\BookingCustomers;
+use App\Models\PackagesBooking;
+use App\Models\payment_request;
 use Str;
 use Hash;
 use Session;
@@ -109,8 +111,54 @@ class WebsiteController extends Controller
     }
 
     public function customer_dashboard(){
-        return view('website/customer_dashboard/customer_dashboard'); 
+        if(Session::has('customer_data')){
+            $customer_Data = Session::get('customer_data');
+
+            $customer_Data = BookingCustomers::where('email',$customer_Data->email)->first();
+            // dd($customer_Data);
+            $tentative_booking = PackagesBooking::where('customer_id',$customer_Data->id)
+                                                    ->where('status','Tentative')
+                                                    ->count();
+
+            $confirmed_booking = PackagesBooking::where('customer_id',$customer_Data->id)
+                                                    ->where('status','Confirmed')
+                                                    ->count();
+
+            $last_bookings = PackagesBooking::where('customer_id',$customer_Data->id)
+                                                    ->orderBy('id','desc')
+                                                    ->limit(10)
+                                                    ->get();
+
+            return view('website/customer_dashboard/customer_dashboard',compact('tentative_booking','confirmed_booking','last_bookings','customer_Data')); 
+        }else{
+            return redirect('/');
+        }
     }
+
+    public function customer_booking(){
+        if(Session::has('customer_data')){
+            $customer_Data = Session::get('customer_data');
+            $last_bookings = PackagesBooking::where('customer_id',$customer_Data->id)
+                                                    ->orderBy('id','desc')
+                                                    ->get();
+            return view('website/customer_dashboard/customer_booking',compact('last_bookings'));                                                 
+        }else{
+            return redirect('/');
+        }
+    }
+
+    public function customer_payment_request(Request $request){
+        if(Session::has('customer_data')){
+            $customer_Data = Session::get('customer_data');
+            $payments_request_data = payment_request::where('customer_id',$customer_Data->id)->orderBy('id','desc')->get();
+             return view('website/customer_dashboard/customer_payment_request',compact('payments_request_data'));     
+        }else{
+            return redirect('/');
+        }                                            
+        
+    }
+
+    
 
     
 

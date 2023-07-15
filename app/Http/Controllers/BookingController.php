@@ -229,6 +229,106 @@ class BookingController extends Controller
         
     }
 
+    public function admin_payment_request(){
+        $payments_request_data = payment_request::orderBy('id','desc')->paginate(10);
+        return view('adminPanel/bookings/payments_request',compact('payments_request_data'));     
+    }
+
+    public function bookings_list(){
+        $bookings_list = PackagesBooking::where('status','Tentative')->orderBy('id','desc')->paginate(10);
+        return view('adminPanel/bookings/bookings_list',compact('bookings_list'));     
+        
+    }
+
+    public function Confirmed_bookings_list(){
+        $bookings_list = PackagesBooking::where('status','Confirmed')->orderBy('id','desc')->paginate(10);
+        return view('adminPanel/bookings/Confirmed_bookings_list',compact('bookings_list'));     
+        
+    }
+
+    public function update_booking_status(Request $request){
+        $result = PackagesBooking::find($request->booking_id)->update([
+            'status' => $request->booking_status,
+        ]);
+
+        if($result){
+            return redirect()->back()->with(['success'=>'Booking Status Updated Successfully']);
+        }else{
+            return redirect()->back()->with(['success'=>'Something Went Wrong Try Again']);
+        }
+    }
+    
+
+    public function update_payment_status(Request $request){
+        // dd($request->all());
+        $payment_req_data = payment_request::find($request->payment_id);
+        
+
+            try {
+
+                DB::transaction(function() use($request,$payment_req_data){
+                    if($request->payment_status == 'Approve'){
+
+                        $customer_data = BookingCustomers::find($payment_req_data->customer_id);
+                        // dd($customer_data);
+                        $customer_updated_balance = $customer_data->balance - $payment_req_data->payment_amount;
+
+                        BookingCustomers::find($customer_data->id)->update([
+                            'balance' => $customer_updated_balance
+                        ]);
+
+                        CustomerLedger::insert([
+                            'customer_id' => $customer_data->id,
+                            'payment' => $payment_req_data->payment_amount,
+                            'balance' => $customer_updated_balance,
+                            'payment_id' => $request->payment_id,
+                        ]);
+
+                    }
+
+                    // dd($request->payment_status);
+                    if($request->payment_status == 'Reject' || $request->payment_status == 'Pending'){
+                        // dd($payment_req_data->status);
+                        if($payment_req_data->status == 'Approve'){
+                            // dd('Enter Here');
+                            $customer_data = BookingCustomers::find($payment_req_data->customer_id);
+
+                            $customer_updated_balance = $customer_data->balance + $payment_req_data->payment_amount;
+
+                            BookingCustomers::find($customer_data->id)->update([
+                                'balance' => $customer_updated_balance
+                            ]);
+
+                            CustomerLedger::insert([
+                                'customer_id' => $customer_data->id,
+                                'recevied' => $payment_req_data->payment_amount,
+                                'balance' => $customer_updated_balance,
+                                'payment_id' => $request->payment_id,
+                                'remarks' => $request->message,
+                            ]);
+                        }
+                    }
+
+                    payment_request::find($request->payment_id)->update([
+                        'status' => $request->payment_status,
+                        'message' => $request->message,
+                    ]);
+
+                });
+
+            
+                return redirect()->back()->with(['success'=>'Payment Status Updated Successfully']);
+
+            } catch (\PDOException $e) {
+                DB::rollBack();
+                echo $e;
+                return redirect()->back()->with(['error'=>'Something Went Wrong Try Again']);
+            }
+        
+
+        
+    }
+
     public function payment_request_submit(Request $request){
         if(Session::has('customer_data')){
             $customer_Data = Session::get('customer_data');

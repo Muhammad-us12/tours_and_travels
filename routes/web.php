@@ -34,6 +34,10 @@ Route::get('/package_details/{package_details}', [WebsiteController::class,'pack
 Route::any('/activities-list', [WebsiteController::class,'activities_list']);
 Route::get('/activity_details/{activity_details}', [WebsiteController::class,'activity_details']);
 
+Route::get('/blogs_list', [WebsiteController::class,'blogs_list']);
+Route::get('/category-blogs/{id}', [WebsiteController::class,'category_blogs']);
+Route::get('/blog-details/{id}', [WebsiteController::class,'blog_details']);
+
 
 Route::post('/add_to_cart', [BookingController::class,'add_to_cart']);
 Route::get('/checkout', [BookingController::class,'checkout']);
@@ -70,6 +74,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    
+    Route::get('/admin_payment_request', [BookingController::class,'admin_payment_request']);
+    Route::post('/update_payment_status', [BookingController::class,'update_payment_status']);
+    Route::get('/bookings_list', [BookingController::class,'bookings_list']);
+    Route::get('/confirmed_bookings_list', [BookingController::class,'Confirmed_bookings_list']);
+    Route::post('/update_booking_status', [BookingController::class,'update_booking_status']);
+    
     // Destinations Routes
     Route::get('/destinations_list',[DestinationsController::class,'destinations_list']);
     Route::post('/destination_submit',[DestinationsController::class,'destination_submit']);

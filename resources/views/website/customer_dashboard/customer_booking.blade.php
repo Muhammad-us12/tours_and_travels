@@ -72,7 +72,14 @@
                       <td>{{ $book_res->childs }}</td>
                       <td>${{ $book_res->total_price }}</td>
                       <td>
+                        @if($book_res->status == 'Tentative')
                         <div class="rounded-100 py-4 text-center col-12 text-14 fw-500 bg-red-3 text-red-2">{{ $book_res->status }}</div>
+                        @endif
+
+                        @if($book_res->status == 'Confirmed')
+                        <div class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">{{ $book_res->status }}</div>
+                        @endif
+                        
                       </td>
                       <td>@isset($book_res->created_at) {{ date('d-m-Y',strtotime($book_res->created_at)) }} @endisset</td>
                     </tr>

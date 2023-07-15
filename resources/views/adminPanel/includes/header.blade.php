@@ -159,6 +159,45 @@
                         </li>
 
                         <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#bookings_list" aria-expanded="false" aria-controls="bookings_list" class="side-nav-link">
+                                <i class="uil-home-alt"></i>
+                                <span class="badge bg-success float-end">4</span>
+                                <span> Bookings </span>
+                            </a>
+                            <div class="collapse" id="bookings_list">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="{{ URL::to('bookings_list') }}">Tentative Bookings</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ URL::to('confirmed_bookings_list') }}">Confrimed Bookings</a>
+                                    </li>
+                                    
+                                  
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#payment_request" aria-expanded="false" aria-controls="payment_request" class="side-nav-link">
+                                <i class="uil-home-alt"></i>
+                                <span class="badge bg-success float-end">4</span>
+                                <span> Payment Request </span>
+                            </a>
+                            <div class="collapse" id="payment_request">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="{{ URL::to('admin_payment_request') }}">Payment Request</a>
+                                    </li>
+                                    
+                                  
+                                </ul>
+                            </div>
+                        </li>
+
+                        
+
+                        <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#reviews" aria-expanded="false" aria-controls="reviews" class="side-nav-link">
                                 <i class="uil-home-alt"></i>
                                 <span class="badge bg-success float-end">4</span>

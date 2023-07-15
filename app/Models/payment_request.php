@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class payment_request extends Model
 {
     use HasFactory;
+    protected $fillable = ['status','message'];
 }

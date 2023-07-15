@@ -147,6 +147,7 @@
                       <th>Date</th>
                       <th>Method</th>
                       <th>Status</th>
+                      <th>Message</th>
                      
                     </tr>
                   </thead>
@@ -162,7 +163,21 @@
                       <td class="fw-500">{{ $pay_res->payment_amount }}</td>
                       <td>{{ $pay_res->payment_date }}</td>
                       <td>{{ $pay_res->payment_method }}</td>
-                      <td>{{ $pay_res->status }}</td>
+                      <td>
+                        @if($pay_res->status == 'Approve')
+                          <span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">{{ $pay_res->status }}</span>  
+                        @endif
+
+                        @if($pay_res->status == 'Pending')
+                          <span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-yellow-4 text-yellow-3">{{ $pay_res->status }}</span>  
+                        @endif
+
+                        @if($pay_res->status == 'Reject')
+                          <span class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-red-3 text-red-2">{{ $pay_res->status }}</span>  
+                        @endif
+                      </td>
+                      <td>{{ $pay_res->message }}</td>
+
                      
                     </tr>
                     @endforeach

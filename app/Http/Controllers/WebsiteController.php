@@ -7,6 +7,7 @@ use App\Models\Packages\Package;
 use App\Models\Activities\Activities;
 use App\Models\Reviews;
 use App\Models\website\Blogs;
+use App\Models\website\BlogCategory;
 use App\Models\BookingCustomers;
 use App\Models\PackagesBooking;
 use App\Models\payment_request;
@@ -21,6 +22,13 @@ use Illuminate\Http\Request;
 class WebsiteController extends Controller
 {
     //
+    public function blogs_list(){
+        $blogs_data = Blogs::where('status','publish')->orderBy("id","desc")->paginate(10);
+        $allCategories = BlogCategory::all();
+        return view('website.blogs.blogs_list',compact('blogs_data','allCategories'));
+
+    }
+
     public function index(){
         $top_destinations = Destinationstio::where('display_on_web','1')
                                 ->orderBy('dest_order','asc')
@@ -128,8 +136,12 @@ class WebsiteController extends Controller
                                                     ->orderBy('id','desc')
                                                     ->limit(10)
                                                     ->get();
+                            
+            $total_paid_amount = payment_request::where('customer_id',$customer_Data->id)
+                                                    ->where('status','Approve')
+                                                    ->sum('payment_amount');
 
-            return view('website/customer_dashboard/customer_dashboard',compact('tentative_booking','confirmed_booking','last_bookings','customer_Data')); 
+            return view('website/customer_dashboard/customer_dashboard',compact('tentative_booking','confirmed_booking','last_bookings','customer_Data','total_paid_amount')); 
         }else{
             return redirect('/');
         }

@@ -89,7 +89,7 @@
                       </li>
 
                       <li>
-                        <a href="#">
+                        <a href="{{ URL::to('blogs_list') }}">
                             Blogs
                         </a>
                       </li>

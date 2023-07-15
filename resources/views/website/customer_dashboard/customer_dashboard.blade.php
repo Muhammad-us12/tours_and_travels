@@ -6,42 +6,8 @@
 @section('content')
 
 <div class="dashboard" data-x="dashboard" data-x-toggle="-is-sidebar-open">
-    <div class="dashboard__sidebar bg-white scroll-bar-1">
+  @include('website/customer_dashboard/dashboard_sidebar')
 
-
-      <div class="sidebar -dashboard">
-
-        <div class="sidebar__item">
-          <div class="sidebar__button -is-active">
-            <a href="{{ URL::to('customer_dashboard') }}" class="d-flex items-center text-15 lh-1 fw-500">
-              <img src="{{ asset('public/frontend/img/dashboard/sidebar/compass.svg') }}" alt="image" class="mr-15">
-              Dashboard
-            </a>
-          </div>
-        </div>
-
-        <div class="sidebar__item">
-          <div class="sidebar__button ">
-            <a href="{{ URL::to('customer_booking') }}" class="d-flex items-center text-15 lh-1 fw-500">
-              <img src="{{ asset('public/frontend/img/dashboard/sidebar/booking.svg') }}" alt="image" class="mr-15">
-              Booking History
-            </a>
-          </div>
-        </div>
-
-        <div class="sidebar__item">
-          <div class="sidebar__button ">
-            <a href="#" class="d-flex items-center text-15 lh-1 fw-500">
-              <img src="{{ asset('public/frontend/img/dashboard/sidebar/log-out.svg') }}" alt="image" class="mr-15">
-              Logout
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-
-    </div>
 
     <div class="dashboard__main">
       <div class="dashboard__content bg-light-2">
@@ -116,7 +82,7 @@
               <div class="row y-gap-20 justify-between items-center">
                 <div class="col-auto">
                   <div class="fw-500 lh-14">Paid</div>
-                  <div class="text-26 lh-16 fw-600 mt-5">22,786</div>
+                  <div class="text-26 lh-16 fw-600 mt-5">${{ $total_paid_amount }}</div>
                   <div class="text-15 lh-14 text-light-1 mt-5">Paid Amount</div>
                 </div>
 
@@ -175,8 +141,13 @@
                       <td>{{ $book_res->childs }}</td>
                       <td>${{ $book_res->total_price }}</td>
                       <td>
+                        @if($book_res->status == 'Tentative')
                         <div class="rounded-100 py-4 text-center col-12 text-14 fw-500 bg-red-3 text-red-2">{{ $book_res->status }}</div>
-                      </td>
+                        @endif
+
+                        @if($book_res->status == 'Confirmed')
+                        <div class="rounded-100 py-4 px-10 text-center text-14 fw-500 bg-blue-1-05 text-blue-1">{{ $book_res->status }}</div>
+                        @endif                      </td>
                       <td>@isset($book_res->created_at) {{ date('d-m-Y',strtotime($book_res->created_at)) }} @endisset</td>
                     </tr>
                     @endforeach

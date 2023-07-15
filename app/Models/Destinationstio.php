@@ -9,5 +9,5 @@ class Destinationstio extends Model
 {
     use HasFactory;
   
-    protected $fillables = ['dest_name','dest_img','dest_order','display_on_web'];
+    protected $fillable = ['dest_name','dest_img','dest_order','display_on_web'];
 }

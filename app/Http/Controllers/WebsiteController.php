@@ -11,6 +11,9 @@ use App\Models\website\BlogCategory;
 use App\Models\BookingCustomers;
 use App\Models\PackagesBooking;
 use App\Models\payment_request;
+use App\Models\VisaRequest;
+use App\Models\Packages\CustomPackage;
+
 use Str;
 use Hash;
 use Session;
@@ -27,6 +30,90 @@ class WebsiteController extends Controller
         $allCategories = BlogCategory::all();
         return view('website.blogs.blogs_list',compact('blogs_data','allCategories'));
 
+    }
+
+    public function custom_package_create(){
+        $countriesList = \DB::table('country')->select('id','name')->get();
+        $all_destinations  = Destinationstio::all();
+        return view('website.custom_package_create',compact('countriesList','all_destinations'));
+    }
+
+    public function letter_of_invitation(){
+        $countriesList = \DB::table('country')->select('id','name')->get();
+        $all_destinations  = Destinationstio::all();
+        return view('website.letter_of_invitation',compact('countriesList','all_destinations'));
+    }
+
+    public function visa_support_submit(Request $request){
+        // dd($request->all());
+
+        $passport_img = '';
+        $iternary_img = '';
+        if($request->file('passport')){
+                 
+            $img_file = $request->file('passport');
+            $name_gen = hexdec(uniqid());
+            $img_ext = strtolower($img_file->getClientOriginalExtension());
+            $img_name = $name_gen.".".$img_ext;
+            $upload = 'public/images/visa';
+            $file_upload = $img_file->move($upload,$img_name);
+            if($file_upload){
+                $passport_img = $img_name;
+            }
+        }
+
+        if($request->file('itinernary')){
+                 
+            $img_file = $request->file('itinernary');
+            $name_gen = hexdec(uniqid());
+            $img_ext = strtolower($img_file->getClientOriginalExtension());
+            $img_name = $name_gen.".".$img_ext;
+            $upload = 'public/images/visa';
+            $file_upload = $img_file->move($upload,$img_name);
+            if($file_upload){
+                $iternary_img = $img_name;
+            }
+        }
+
+        $result = VisaRequest::insert([
+            'group_size' => $request->group_size,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'destinations' => json_encode($request->destinations),
+            'lead_name' => $request->lead_name,
+            'lead_email' => $request->lead_email,
+            'lead_phone' => $request->lead_phone,
+            'lead_country' => $request->lead_country,
+            'passport_img' => $passport_img,
+            'iteneray_img' => $iternary_img,
+            'message' => $request->message,
+        ]);
+
+        if($result){
+            return redirect()->back()->with(['success'=>'Your Request has Submited Successfully']);
+        }else{
+            return redirect()->back()->with(['error'=>'Something Went Wrong Try Again']);
+        }
+    }
+
+    public function custom_package_submit(Request $request){
+        $result = CustomPackage::insert([
+            'group_size' => $request->group_size,
+            'start_date' => $request->start_date,
+            'duration' => $request->duration,
+            'destinations' => json_encode($request->destinations),
+            'lead_name' => $request->lead_name,
+            'lead_email' => $request->lead_email,
+            'lead_phone' => $request->lead_phone,
+            'lead_country' => $request->lead_country,
+            'message' => $request->message,
+        ]);
+
+        if($result){
+            return redirect()->back()->with(['success'=>'Your Request has Submited Successfully']);
+        }else{
+            return redirect()->back()->with(['error'=>'Something Went Wrong Try Again']);
+        }
     }
 
     public function index(){

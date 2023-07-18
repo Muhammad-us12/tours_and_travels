@@ -30,6 +30,11 @@ use App\Http\Controllers\BookingController;
 Route::get('/', [WebsiteController::class,'index']);
 Route::any('/packages-list', [WebsiteController::class,'packages_list']);
 Route::get('/package_details/{package_details}', [WebsiteController::class,'package_details']);
+Route::get('/custom_package_create', [WebsiteController::class,'custom_package_create']);
+Route::post('/custom_package_submit', [WebsiteController::class,'custom_package_submit']);
+Route::get('/letter_of_invitation', [WebsiteController::class,'letter_of_invitation']);
+Route::post('/visa_support_submit', [WebsiteController::class,'visa_support_submit']);
+
 
 Route::any('/activities-list', [WebsiteController::class,'activities_list']);
 Route::get('/activity_details/{activity_details}', [WebsiteController::class,'activity_details']);
@@ -77,6 +82,13 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/admin_payment_request', [BookingController::class,'admin_payment_request']);
     Route::post('/update_payment_status', [BookingController::class,'update_payment_status']);
+   
+    
+    Route::get('/custom_package_request', [BookingController::class,'custom_package_request']);
+    Route::get('/visa_request_list', [BookingController::class,'visa_request_list']);
+    
+    Route::post('/update_custom_package_status', [BookingController::class,'update_custom_package_status']);
+    
     Route::get('/bookings_list', [BookingController::class,'bookings_list']);
     Route::get('/confirmed_bookings_list', [BookingController::class,'Confirmed_bookings_list']);
     Route::post('/update_booking_status', [BookingController::class,'update_booking_status']);

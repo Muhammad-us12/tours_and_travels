@@ -71,7 +71,7 @@
                       </li>
 
                       <li>
-                        <a href="#">
+                        <a href="{{ URL::to('letter_of_invitation') }}">
                         LOI Pakistan/ Visa Support
                         </a>
                       </li>

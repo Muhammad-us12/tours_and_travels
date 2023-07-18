@@ -429,7 +429,7 @@
                 <h4 class="text-30 lg:text-24 text-white">Free Personalized Itinerary</h4>
 
                 <div class="d-inline-block mt-30">
-                  <a href="#" class="button px-48 py-15 -blue-1 -min-180 bg-white text-dark-1">Experiences</a>
+                  <a href="{{ URL::to('custom_package_create') }}" class="button px-48 py-15 -blue-1 -min-180 bg-white text-dark-1">Create Custom Package</a>
                 </div>
               </div>
             </div>

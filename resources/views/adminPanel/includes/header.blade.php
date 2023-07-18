@@ -195,6 +195,40 @@
                             </div>
                         </li>
 
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#custom_package_request" aria-expanded="false" aria-controls="custom_package_request" class="side-nav-link">
+                                <i class="uil-home-alt"></i>
+                                <span class="badge bg-success float-end">4</span>
+                                <span> Custom Package </span>
+                            </a>
+                            <div class="collapse" id="custom_package_request">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="{{ URL::to('custom_package_request') }}">Custom Package Request</a>
+                                    </li>
+                                    
+                                  
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#visa_request" aria-expanded="false" aria-controls="visa_request" class="side-nav-link">
+                                <i class="uil-home-alt"></i>
+                                <span class="badge bg-success float-end">4</span>
+                                <span> Visa Request </span>
+                            </a>
+                            <div class="collapse" id="visa_request">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="{{ URL::to('visa_request_list') }}">Visa Request</a>
+                                    </li>
+                                    
+                                  
+                                </ul>
+                            </div>
+                        </li>
+
                         
 
                         <li class="side-nav-item">

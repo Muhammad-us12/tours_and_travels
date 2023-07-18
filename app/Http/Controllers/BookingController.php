@@ -10,6 +10,9 @@ use App\Models\BookingCustomers;
 use App\Models\CustomerLedger;
 use App\Models\PackagesBooking;
 use App\Models\payment_request;
+use App\Models\Packages\CustomPackage;
+use App\Models\VisaRequest;
+
 use Session;
 use DB;
 use Str;
@@ -238,6 +241,33 @@ class BookingController extends Controller
         $bookings_list = PackagesBooking::where('status','Tentative')->orderBy('id','desc')->paginate(10);
         return view('adminPanel/bookings/bookings_list',compact('bookings_list'));     
         
+    }
+
+    public function custom_package_request(){
+        $custom_packages = CustomPackage::orderBy('id','desc')->paginate(10);
+        return view('adminPanel/packages/custom_packages',compact('custom_packages'));     
+        
+    }
+
+    public function visa_request_list(){
+        $visa_requests = VisaRequest::orderBy('id','desc')->paginate(10);
+        return view('adminPanel/packages/visa_requests',compact('visa_requests'));     
+        
+    }
+
+    
+
+    public function update_custom_package_status(Request $request){
+        // dd($request->all());
+        $result = CustomPackage::find($request->payment_id)->update([
+            'status' => $request->payment_status
+        ]);
+
+        if($result){
+            return redirect()->back()->with(['success'=>'Status Updated Successfully']);
+        }else{
+            return redirect()->back()->with(['success'=>'Something Went Wrong Try Again']);
+        }
     }
 
     public function Confirmed_bookings_list(){

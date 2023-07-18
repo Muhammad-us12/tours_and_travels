@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2023 at 09:33 AM
+-- Generation Time: Jul 18, 2023 at 09:09 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -140,8 +140,8 @@ CREATE TABLE `booking_customers` (
 --
 
 INSERT INTO `booking_customers` (`id`, `customer_name`, `balance`, `email`, `password`, `phone`, `address`, `country`, `zip`, `gender`, `created_at`, `updated_at`) VALUES
-(4, 'Muhammad Usama', 6210.00, 'usama.asghar7868@gmail.com', '$2y$10$P/EnBdV.3vYBlS2ZYoL6g.rDgyTCGAsYOcK8tFgSysgv2qgf8YsRa', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', '2023-07-02 23:46:28', '2023-07-14 00:43:01'),
-(5, 'Muhammad Usama', 105.00, 'uasghar992@gmail.com', '', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', '2023-07-12 17:46:04', '2023-07-12 17:46:04');
+(4, 'Muhammad Usama', 5710.00, 'usama.asghar7868@gmail.com', '$2y$10$4bkEMhEFRIvz.rZ7PLzPteoLWYQ5jq252bBTPh1PCR2hRv7s3N4Ru', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', '2023-07-02 23:46:28', '2023-07-15 16:06:50'),
+(5, 'Muhammad Usama', 105.00, 'uasghar992@gmail.com', '$2y$10$L7xf8MY.Z6UNDeK0NrkRXOBFoOle9Nf8tqRBiq1WBJr89ieUGSAiG', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', 'Muhammad Usama', '2023-07-12 17:46:04', '2023-07-15 15:31:53');
 
 -- --------------------------------------------------------
 
@@ -419,6 +419,7 @@ CREATE TABLE `customer_ledgers` (
   `invoice_id` varchar(255) DEFAULT NULL,
   `payment_id` int(11) DEFAULT NULL,
   `recevied_id` int(11) DEFAULT NULL,
+  `remarks` varchar(300) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -427,15 +428,47 @@ CREATE TABLE `customer_ledgers` (
 -- Dumping data for table `customer_ledgers`
 --
 
-INSERT INTO `customer_ledgers` (`id`, `customer_id`, `payment`, `recevied`, `balance`, `invoice_id`, `payment_id`, `recevied_id`, `created_at`, `updated_at`) VALUES
-(1, 4, NULL, 1200.00, 1200, 'G8CdtM', NULL, NULL, NULL, NULL),
-(2, 4, NULL, 1200.00, 2400, '798543', NULL, NULL, NULL, NULL),
-(3, 4, NULL, 1200.00, 3600, '720290', NULL, NULL, NULL, NULL),
-(4, 4, NULL, 1200.00, 4800, '836961', NULL, NULL, NULL, NULL),
-(5, 4, NULL, 1200.00, 6000, '210763', NULL, NULL, NULL, NULL),
-(6, 4, NULL, 105.00, 6105, '982522', NULL, NULL, NULL, NULL),
-(7, 4, NULL, 105.00, 6210, '792192', NULL, NULL, NULL, NULL),
-(8, 5, NULL, 105.00, 105, '607071', NULL, NULL, NULL, NULL);
+INSERT INTO `customer_ledgers` (`id`, `customer_id`, `payment`, `recevied`, `balance`, `invoice_id`, `payment_id`, `recevied_id`, `remarks`, `created_at`, `updated_at`) VALUES
+(1, 4, NULL, 1200.00, 1200, 'G8CdtM', NULL, NULL, NULL, NULL, NULL),
+(2, 4, NULL, 1200.00, 2400, '798543', NULL, NULL, NULL, NULL, NULL),
+(3, 4, NULL, 1200.00, 3600, '720290', NULL, NULL, NULL, NULL, NULL),
+(4, 4, NULL, 1200.00, 4800, '836961', NULL, NULL, NULL, NULL, NULL),
+(5, 4, NULL, 1200.00, 6000, '210763', NULL, NULL, NULL, NULL, NULL),
+(6, 4, NULL, 105.00, 6105, '982522', NULL, NULL, NULL, NULL, NULL),
+(7, 4, NULL, 105.00, 6210, '792192', NULL, NULL, NULL, NULL, NULL),
+(8, 5, NULL, 105.00, 105, '607071', NULL, NULL, NULL, NULL, NULL),
+(12, 5, 105.00, NULL, 0, NULL, 3, NULL, NULL, NULL, NULL),
+(16, 5, NULL, 105.00, 105, NULL, 3, NULL, 'Wrong Number', NULL, NULL),
+(17, 4, 500.00, NULL, 5710, NULL, 1, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `custom_packages`
+--
+
+CREATE TABLE `custom_packages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `group_size` int(11) NOT NULL,
+  `start_date` date NOT NULL,
+  `duration` int(11) NOT NULL,
+  `destinations` varchar(3000) NOT NULL,
+  `lead_name` varchar(255) NOT NULL,
+  `lead_email` varchar(255) NOT NULL,
+  `lead_phone` varchar(255) NOT NULL,
+  `lead_country` varchar(255) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `status` varchar(30) NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `custom_packages`
+--
+
+INSERT INTO `custom_packages` (`id`, `group_size`, `start_date`, `duration`, `destinations`, `lead_name`, `lead_email`, `lead_phone`, `lead_country`, `message`, `status`, `created_at`, `updated_at`) VALUES
+(1, 20, '2023-07-30', 18, '[\"Madinah Munawara\",\"Makkah Mukarma\"]', 'Muhammad Usama', 'usama.asghar7868@gmail.com', '+92343943493943', 'PAKISTAN', 'This is request Message', 'pending', NULL, '2023-07-16 06:48:44');
 
 -- --------------------------------------------------------
 
@@ -512,7 +545,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (16, '2023_07_02_115334_create_booking_customers_table', 7),
 (17, '2023_07_02_150417_create_customer_ledgers_table', 7),
 (19, '2023_07_02_150900_create_packages_bookings_table', 8),
-(20, '2023_07_14_070702_create_payment_requests_table', 9);
+(20, '2023_07_14_070702_create_payment_requests_table', 9),
+(21, '2023_07_16_081106_create_custom_packages_table', 10),
+(22, '2023_07_18_064559_create_visa_requests_table', 11);
 
 -- --------------------------------------------------------
 
@@ -592,9 +627,9 @@ INSERT INTO `packages_bookings` (`id`, `customer_name`, `status`, `customer_id`,
 (5, 'Muhammad Usama', 'Tentative', 4, 2, '720290', 2, NULL, NULL, NULL, 2, 1200.00, '{\"booking_type\":\"Package\",\"package_id\":2,\"package_title\":\"8 Days Adventure Tour \\u2013 Snow, Sun & Sand\",\"adult_cost\":200,\"adult_sale\":250,\"child_cost\":300,\"child_sale\":350,\"start_date\":\"2023-06-15\",\"end_date\":\"2023-06-30\",\"booking_adults\":\"2\",\"booking_childs\":\"2\",\"adults_total_price\":500,\"childs_total_price\":700,\"grand_total\":1200}', NULL, NULL),
 (6, 'Muhammad Usama', 'Tentative', 4, 2, '836961', 2, NULL, NULL, NULL, 2, 1200.00, '{\"booking_type\":\"Package\",\"package_id\":2,\"package_title\":\"8 Days Adventure Tour \\u2013 Snow, Sun & Sand\",\"adult_cost\":200,\"adult_sale\":250,\"child_cost\":300,\"child_sale\":350,\"start_date\":\"2023-06-15\",\"end_date\":\"2023-06-30\",\"booking_adults\":\"2\",\"booking_childs\":\"2\",\"adults_total_price\":500,\"childs_total_price\":700,\"grand_total\":1200}', NULL, NULL),
 (7, 'Muhammad Usama', 'Tentative', 4, 2, '210763', 2, NULL, NULL, NULL, 2, 1200.00, '{\"booking_type\":\"Package\",\"package_id\":2,\"package_title\":\"8 Days Adventure Tour \\u2013 Snow, Sun & Sand\",\"adult_cost\":200,\"adult_sale\":250,\"child_cost\":300,\"child_sale\":350,\"start_date\":\"2023-06-15\",\"end_date\":\"2023-06-30\",\"booking_adults\":\"2\",\"booking_childs\":\"2\",\"adults_total_price\":500,\"childs_total_price\":700,\"grand_total\":1200}', '2023-07-03 05:47:27', NULL),
-(8, 'Muhammad Usama', 'Tentative', 4, 2, '982522', 3, NULL, NULL, NULL, 2, 105.00, '{\"booking_type\":\"Activity\",\"package_id\":2,\"package_title\":\"Small Class On Islamic Principals\",\"adult_cost\":20,\"adult_sale\":25,\"child_cost\":10,\"child_sale\":15,\"start_date\":\"2023-07-01\",\"end_date\":\"2023-07-31\",\"customer_select_date\":\"2023-07-10\",\"booking_adults\":\"3\",\"booking_childs\":\"2\",\"adults_total_price\":75,\"childs_total_price\":30,\"grand_total\":105}', '2023-07-12 07:10:37', NULL),
+(8, 'Muhammad Usama', 'Confirmed', 4, 2, '982522', 3, NULL, NULL, NULL, 2, 105.00, '{\"booking_type\":\"Activity\",\"package_id\":2,\"package_title\":\"Small Class On Islamic Principals\",\"adult_cost\":20,\"adult_sale\":25,\"child_cost\":10,\"child_sale\":15,\"start_date\":\"2023-07-01\",\"end_date\":\"2023-07-31\",\"customer_select_date\":\"2023-07-10\",\"booking_adults\":\"3\",\"booking_childs\":\"2\",\"adults_total_price\":75,\"childs_total_price\":30,\"grand_total\":105}', '2023-07-12 07:10:37', '2023-07-15 16:07:52'),
 (9, 'Muhammad Usama', 'Tentative', 4, 2, '792192', 3, '{\"passenger_name\":\"Muhammad Usama\",\"lead_email\":\"usama.asghar7868@gmail.com\",\"lead_phone\":\"+92343943493943\",\"lead_address\":\"Chand mary park Road Rassol Nager Sheikhupura\",\"lead_country\":\"PAKISTAN\",\"lead_zip\":\"30232\",\"lead_gender\":\"male\"}', '[{\"name\":\"Adult 1\",\"gender\":\"male\"},{\"name\":\"Adult 2\",\"gender\":\"female\"}]', '[{\"name\":\"Child 1\",\"gender\":\"male\"},{\"name\":\"Child 2\",\"gender\":\"female\"}]', 2, 105.00, '{\"booking_type\":\"Activity\",\"package_id\":2,\"package_title\":\"Small Class On Islamic Principals\",\"adult_cost\":20,\"adult_sale\":25,\"child_cost\":10,\"child_sale\":15,\"start_date\":\"2023-07-01\",\"end_date\":\"2023-07-31\",\"customer_select_date\":\"07\\/28\\/2023\",\"booking_adults\":\"3\",\"booking_childs\":\"2\",\"adults_total_price\":75,\"childs_total_price\":30,\"grand_total\":105}', '2023-07-12 22:45:01', NULL),
-(10, 'Muhammad Usama', 'Tentative', 5, 2, '607071', 3, '{\"passenger_name\":\"Muhammad Usama\",\"lead_email\":\"uasghar992@gmail.com\",\"lead_phone\":\"+92343943493943\",\"lead_address\":\"Chand mary park Road Rassol Nager Sheikhupura\",\"lead_country\":\"PAKISTAN\",\"lead_zip\":\"30232\",\"lead_gender\":\"male\"}', '[{\"name\":\"Adult 1\",\"gender\":\"male\"},{\"name\":\"Adult 2\",\"gender\":\"female\"}]', '[{\"name\":\"Child 1\",\"gender\":\"male\"},{\"name\":\"Child 2\",\"gender\":\"female\"}]', 2, 105.00, '{\"booking_type\":\"Activity\",\"package_id\":2,\"package_title\":\"Small Class On Islamic Principals\",\"adult_cost\":20,\"adult_sale\":25,\"child_cost\":10,\"child_sale\":15,\"start_date\":\"2023-07-01\",\"end_date\":\"2023-07-31\",\"customer_select_date\":\"07\\/28\\/2023\",\"booking_adults\":\"3\",\"booking_childs\":\"2\",\"adults_total_price\":75,\"childs_total_price\":30,\"grand_total\":105}', '2023-07-12 22:46:04', NULL);
+(10, 'Muhammad Usama', 'Confirmed', 5, 2, '607071', 3, '{\"passenger_name\":\"Muhammad Usama\",\"lead_email\":\"uasghar992@gmail.com\",\"lead_phone\":\"+92343943493943\",\"lead_address\":\"Chand mary park Road Rassol Nager Sheikhupura\",\"lead_country\":\"PAKISTAN\",\"lead_zip\":\"30232\",\"lead_gender\":\"male\"}', '[{\"name\":\"Adult 1\",\"gender\":\"male\"},{\"name\":\"Adult 2\",\"gender\":\"female\"}]', '[{\"name\":\"Child 1\",\"gender\":\"male\"},{\"name\":\"Child 2\",\"gender\":\"female\"}]', 2, 105.00, '{\"booking_type\":\"Activity\",\"package_id\":2,\"package_title\":\"Small Class On Islamic Principals\",\"adult_cost\":20,\"adult_sale\":25,\"child_cost\":10,\"child_sale\":15,\"start_date\":\"2023-07-01\",\"end_date\":\"2023-07-31\",\"customer_select_date\":\"07\\/28\\/2023\",\"booking_adults\":\"3\",\"booking_childs\":\"2\",\"adults_total_price\":75,\"childs_total_price\":30,\"grand_total\":105}', '2023-07-12 22:46:04', '2023-07-15 16:05:15');
 
 -- --------------------------------------------------------
 
@@ -624,6 +659,7 @@ CREATE TABLE `payment_requests` (
   `payment_pic` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL,
   `customer_id` varchar(255) NOT NULL,
+  `message` varchar(3000) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -632,9 +668,10 @@ CREATE TABLE `payment_requests` (
 -- Dumping data for table `payment_requests`
 --
 
-INSERT INTO `payment_requests` (`id`, `payment_amount`, `transcation_id`, `payment_method`, `invoice_no`, `payment_date`, `payment_pic`, `status`, `customer_id`, `created_at`, `updated_at`) VALUES
-(1, '500', 'Tras23324', 'Bank Transfer', '324234234', '2023-07-14', '1771379863889882.png', 'Pending', '4', '2023-07-14 02:24:41', '2023-07-14 02:24:41'),
-(2, '1000', 'Tr324234', 'Bank Trasnfer', '2342342', '2023-07-14', '1771379997765839.png', 'Pending', '4', '2023-07-14 02:26:48', '2023-07-14 02:26:48');
+INSERT INTO `payment_requests` (`id`, `payment_amount`, `transcation_id`, `payment_method`, `invoice_no`, `payment_date`, `payment_pic`, `status`, `customer_id`, `message`, `created_at`, `updated_at`) VALUES
+(1, '500', 'Tras23324', 'Bank Transfer', '324234234', '2023-07-14', '1771379863889882.png', 'Approve', '4', NULL, '2023-07-14 02:24:41', '2023-07-15 16:06:50'),
+(2, '1000', 'Tr324234', 'Bank Trasnfer', '2342342', '2023-07-14', '1771379997765839.png', 'Pending', '4', NULL, '2023-07-14 02:26:48', '2023-07-14 02:26:48'),
+(3, '105', 'TR232333', 'Bank Transfer', '607071', '2023-07-16', '1771515249128887.png', 'Reject', '5', 'Wrong Number', '2023-07-15 14:16:34', '2023-07-15 15:31:53');
 
 -- --------------------------------------------------------
 
@@ -706,6 +743,36 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Muhammad USama', 'usama.asghar7868@gmail.com', NULL, '$2y$10$JtsQP5E7dcn/VJPJmHF61eylcVYgyt5/SNes1ECfflZtvgQxCvuj6', NULL, '2023-05-28 14:10:22', '2023-05-28 14:10:22');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `visa_requests`
+--
+
+CREATE TABLE `visa_requests` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `group_size` int(11) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `destinations` varchar(3000) NOT NULL,
+  `lead_name` varchar(255) NOT NULL,
+  `lead_email` varchar(255) NOT NULL,
+  `lead_phone` varchar(255) NOT NULL,
+  `lead_country` varchar(255) NOT NULL,
+  `passport_img` varchar(255) NOT NULL,
+  `iteneray_img` varchar(255) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `visa_requests`
+--
+
+INSERT INTO `visa_requests` (`id`, `group_size`, `start_date`, `end_date`, `destinations`, `lead_name`, `lead_email`, `lead_phone`, `lead_country`, `passport_img`, `iteneray_img`, `message`, `created_at`, `updated_at`) VALUES
+(1, 10, '2023-07-18', '2023-07-25', '[\"Islamabad\",\"Lahore\"]', 'Muhammad Usama', 'usama.asghar7868@gmail.com', '+92343943493943', 'PAKISTAN', '1771740460944695.jpeg', '1771740461014112.jpeg', 'This is Special Request', NULL, NULL);
+
 --
 -- Indexes for dumped tables
 --
@@ -745,6 +812,12 @@ ALTER TABLE `country`
 -- Indexes for table `customer_ledgers`
 --
 ALTER TABLE `customer_ledgers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `custom_packages`
+--
+ALTER TABLE `custom_packages`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -812,6 +885,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `visa_requests`
+--
+ALTER TABLE `visa_requests`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -849,7 +928,13 @@ ALTER TABLE `country`
 -- AUTO_INCREMENT for table `customer_ledgers`
 --
 ALTER TABLE `customer_ledgers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `custom_packages`
+--
+ALTER TABLE `custom_packages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `destinationstios`
@@ -867,7 +952,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `packages`
@@ -885,7 +970,7 @@ ALTER TABLE `packages_bookings`
 -- AUTO_INCREMENT for table `payment_requests`
 --
 ALTER TABLE `payment_requests`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -903,6 +988,12 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `visa_requests`
+--
+ALTER TABLE `visa_requests`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
